@@ -1,0 +1,32 @@
+import { Request, Response } from '../helpers/helper.generic'
+
+export interface IControllerUser {
+  registerControllerUser(req: Request, res: Response): Promise<any>
+  loginControllerUser(req: Request, res: Response): Promise<any>
+  activationControllerUser(req: Request, res: Response): Promise<any>
+  forgotControllerUser(req: Request, res: Response): Promise<any>
+  resendControllerUser(req: Request, res: Response): Promise<any>
+  resetControllerUser(req: Request, res: Response): Promise<any>
+}
+
+export interface IServiceUser {
+  registerServiceUser(req: Request): Promise<Record<string, any>>
+  loginServiceUser(req: Request): Promise<Record<string, any>>
+  activationServiceUser(req: Request): Promise<Record<string, any>>
+  forgotServiceUser(req: Request): Promise<Record<string, any>>
+  resendServiceUser(req: Request): Promise<Record<string, any>>
+  resetServiceUser(req: Request): Promise<Record<string, any>>
+}
+
+export type IUser = {
+  readonly email: string
+  readonly password: string
+  readonly role: string
+  readonly active?: boolean
+  readonly verified?: boolean
+  readonly access_token?: string
+  readonly expired_at?: any
+  readonly type?: string
+  readonly created_at?: any
+  readonly updated_at?: any
+}
