@@ -15,8 +15,8 @@
     "kroll": "npx knex --knexfile knexfile.ts migrate:rollback",
     "klist": "npx knex --knexfile knexfile.ts migrate:list"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "restuwahyu13",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",

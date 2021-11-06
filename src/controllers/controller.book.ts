@@ -72,7 +72,7 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
  */
 
 export class Schema {
-  static createSchemaAuthor = checkSchema({
+  static createSchemaBook = checkSchema({
     name: {
       in: ['body'],
       notEmpty: {
@@ -117,7 +117,7 @@ export class Schema {
         errorMessage: 'publisher is required'
       },
       isString: {
-        errorMessage: 'publisher must be date'
+        errorMessage: 'publisher must be string'
       },
       custom: {
         options: (value) => /^[A-z-Z-a]/gi.test(value),
@@ -142,6 +142,28 @@ export class Schema {
       custom: {
         options: (value) => /^[A-z-Z-a]/gi.test(value),
         errorMessage: 'publisher not including unique character'
+      }
+    },
+    language: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'language is required'
+      },
+      isString: {
+        errorMessage: 'language must be string'
+      },
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'language not including unique character'
+      }
+    },
+    page: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'page is required'
+      },
+      isNumeric: {
+        errorMessage: 'page must be number'
       }
     },
     author_id: {
@@ -155,7 +177,7 @@ export class Schema {
     }
   })
 
-  static resultSchemaAuthor = checkSchema({
+  static resultSchemaBook = checkSchema({
     id: {
       in: ['params'],
       notEmpty: {
@@ -167,7 +189,7 @@ export class Schema {
     }
   })
 
-  static deleteSchemaAuthor = checkSchema({
+  static deleteSchemaBook = checkSchema({
     id: {
       in: ['params']
     },
@@ -179,7 +201,7 @@ export class Schema {
     }
   })
 
-  static updateSchemaAuthor = checkSchema({
+  static updateSchemaBook = checkSchema({
     id: {
       in: ['params'],
       notEmpty: {
@@ -199,7 +221,7 @@ export class Schema {
       },
       custom: {
         options: (value) => /^[A-z-Z-a]/gi.test(value),
-        errorMessage: 'name not including unique character'
+        errorMessage: 'name not including number or unique character'
       }
     },
     isbn: {
@@ -237,7 +259,7 @@ export class Schema {
       },
       custom: {
         options: (value) => /^[A-z-Z-a]/gi.test(value),
-        errorMessage: 'publisher not including unique character'
+        errorMessage: 'name not including publisher or unique character'
       }
     },
     price: {
@@ -257,7 +279,29 @@ export class Schema {
       },
       custom: {
         options: (value) => /^[A-z-Z-a]/gi.test(value),
-        errorMessage: 'publisher not including unique character'
+        errorMessage: 'publisher not including number or unique character'
+      }
+    },
+    language: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'language is required'
+      },
+      isString: {
+        errorMessage: 'language must be string'
+      },
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'language not including number or unique character'
+      }
+    },
+    page: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'page is required'
+      },
+      isNumeric: {
+        errorMessage: 'page must be number'
       }
     },
     author_id: {

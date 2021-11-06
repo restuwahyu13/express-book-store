@@ -6,6 +6,8 @@ export interface DTOBook {
   readonly publisher: string
   readonly price: number
   readonly description?: string
+  readonly language: string
+  readonly page: number
   readonly author_id: number
   readonly created_at?: any
   readonly updated_at?: any

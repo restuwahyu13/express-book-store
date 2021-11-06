@@ -10,6 +10,8 @@ export class ModelBook extends Model implements DTOBook {
   publisher!: string
   price!: number
   description?: string
+  language!: string
+  page!: number
   author_id!: number
   created_at?: any
   updated_at?: any

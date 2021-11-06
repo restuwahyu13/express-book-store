@@ -23,19 +23,21 @@ export type IBook = {
   readonly publisher: string
   readonly price: number
   readonly description?: string
+  readonly language: string
+  readonly page: number
   readonly author_id: number
   readonly created_at?: any
   readonly updated_at?: any
 }
 
-interface IControllerBookImage {
+export interface IControllerBookImage {
   createControllerBookImage(req: Request, res: Response): Promise<any>
   resultsControllerBookImage(req: Request, res: Response): Promise<any>
   resultControllerBookImage(req: Request, res: Response): Promise<any>
   updateControllerBookImage(req: Request, res: Response): Promise<any>
 }
 
-interface IServiceBookImage {
+export interface IServiceBookImage {
   createServiceBookImage(req: Request): Promise<Record<string, any>>
   resultsServiceBookImage(): Promise<Record<string, any>>
   resultServiceBookImage(req: Request): Promise<Record<string, any>>

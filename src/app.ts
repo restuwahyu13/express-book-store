@@ -93,18 +93,26 @@ class App {
   }
 
   private async run(): Promise<void> {
-    throng({
-      worker: (): void => {
-        this.server.listen(process.env.PORT, () => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.log('Server is running on port: ', process.env.PORT)
-          }
-        })
-      },
-      count: os.cpus().length,
-      workers: os.cpus().length,
-      lifetime: Infinity
-    })
+    if (process.env.NODE_ENV !== 'production') {
+      this.server.listen(process.env.PORT, () => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('Server is running on port: ', process.env.PORT)
+        }
+      })
+    } else {
+      throng({
+        worker: (): void => {
+          this.server.listen(process.env.PORT, () => {
+            if (process.env.NODE_ENV !== 'production') {
+              console.log('Server is running on port: ', process.env.PORT)
+            }
+          })
+        },
+        count: os.cpus().length,
+        workers: os.cpus().length,
+        lifetime: Infinity
+      })
+    }
   }
 
   public async main(): Promise<void> {

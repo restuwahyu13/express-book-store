@@ -7,13 +7,6 @@ import { Request } from '../helpers/helper.generic'
 import { Redis } from '../libs/lib.redis'
 
 export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
-  private ioredis: InstanceType<typeof Redis>
-
-  constructor() {
-    super()
-    this.ioredis = new Redis(0)
-  }
-
   async createServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const checkAuthor = await super.model().query().where({ first_name: req.body.first_name }).first()
@@ -36,6 +29,7 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
 
   async resultsServiceAuthor(): Promise<Record<string, any>> {
     try {
+      const ioredis = new Redis(0)
       const getAuthors = await super.model().query().select('*').orderBy('created_at', 'desc')
 
       if (!getAuthors.length) {
@@ -61,23 +55,27 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
         newAuthors.push(data)
       }
 
-      const cacheDataKeys = await this.ioredis.keyCacheDataExist('authors')
+      const cacheDataKeys = await ioredis.keyCacheDataExist('authors')
 
       if (cacheDataKeys > 0) {
-        const countCacheAuthors = await this.ioredis.getCacheData('authors')
-        const countDbAuthors = await this.model().query().count('id')
+        const countCacheAuthors = await ioredis.countCacheData('authors')
+        const countDbAuthors = await super.model().query().select('*')
 
-        if (countCacheAuthors === countDbAuthors) {
-          const getCacheAuthors = this.ioredis.getCacheData('authors')
-          return Promise.resolve({ code: status.OK, message: 'Authors data already to use', authors: getCacheAuthors })
+        if (countCacheAuthors === countDbAuthors.length) {
+          const getCacheAuthors = await ioredis.getCacheData('authors')
+          return Promise.resolve({
+            code: status.OK,
+            message: 'Authors data already to use, with caching',
+            authors: getCacheAuthors
+          })
         } else {
-          this.ioredis.delCacheData('authors')
-          await this.ioredis.setCacheData('authors', newAuthors)
-          return Promise.resolve({ code: status.OK, message: 'Authors data already to use', authors: newAuthors })
+          ioredis.delCacheData('authors')
+          await ioredis.setCacheData('authors', newAuthors)
+          return Promise.resolve({ code: status.OK, message: 'Authors data already to use, not caching', authors: newAuthors })
         }
       } else {
-        await this.ioredis.setCacheData('authors', newAuthors)
-        return Promise.resolve({ code: status.OK, message: 'Authors data already to use', authors: newAuthors })
+        await ioredis.setCacheData('authors', newAuthors)
+        return Promise.resolve({ code: status.OK, message: 'Authors data already to use, not caching', authors: newAuthors })
       }
     } catch (e: any) {
       return Promise.reject({ code: e.code, message: e.message })

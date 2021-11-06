@@ -3,10 +3,10 @@ import { StatusCodes as status } from 'http-status-codes'
 import { Request, Response, NextFunction } from 'express'
 
 export function validator() {
-  return function (req: Request, res: Response, next: NextFunction): void {
+  return function (req: Request, res: Response, next: NextFunction): any {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      res.status(status.BAD_REQUEST).json(errors.array())
+      return res.status(status.BAD_REQUEST).json(errors.array())
     }
     next()
   }
