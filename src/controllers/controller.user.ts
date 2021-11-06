@@ -123,7 +123,7 @@ export class Schema {
     email: {
       in: ['body'],
       notEmpty: {
-        errorMessage: 'password is required'
+        errorMessage: 'email is required'
       },
       isEmail: {
         errorMessage: 'email is not valid'
@@ -133,6 +133,10 @@ export class Schema {
       in: ['body'],
       notEmpty: {
         errorMessage: 'password is required'
+      },
+      custom: {
+        options: (value) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/gi.test(value),
+        errorMessage: 'password is not valid'
       }
     }
   })

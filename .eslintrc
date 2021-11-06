@@ -10,6 +10,7 @@
     "space-before-function-paren": 0,
     "no-throw-literal": 0,
     "prefer-promise-reject-errors": 0,
+    "dot-notation": 0,
     "no-console": 1
   }
 }

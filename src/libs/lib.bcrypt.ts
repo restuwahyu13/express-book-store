@@ -5,7 +5,7 @@ export const hashPassword = async (password: string): Promise<string> => {
 }
 
 export const comparePassword = (password: string, hashPassword: string): Promise<any> => {
-  return new Promise(async (resolve, _) => {
+  return new Promise(async (resolve, reject) => {
     await bcryptjs.compare(password, hashPassword, (error, success) => resolve({ error, success }))
   })
 }

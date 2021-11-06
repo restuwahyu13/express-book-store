@@ -3,8 +3,16 @@ import { StatusCodes as status } from 'http-status-codes'
 import { ModelBook } from '../models/model.book'
 import { IServiceBook, IBook } from '../interfaces/interface.book'
 import { Request } from '../helpers/helper.generic'
+import { Redis } from '../libs/lib.redis'
 
 export class ServiceBook extends ModelBook implements IServiceBook {
+  private ioredis: InstanceType<typeof Redis>
+
+  constructor() {
+    super()
+    this.ioredis = new Redis(1)
+  }
+
   async createServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
     try {
       const checkBook = await this.model().query().where({ isbn: req.body.isbn }).first()
@@ -57,7 +65,24 @@ export class ServiceBook extends ModelBook implements IServiceBook {
         }
       })
 
-      return Promise.resolve({ code: status.OK, message: 'Books data already to use', books: newBooks })
+      const cacheDataKeys = await this.ioredis.keyCacheDataExist('books')
+
+      if (cacheDataKeys > 0) {
+        const countCacheBooks = await this.ioredis.getCacheData('books')
+        const countDbBooks = await this.model().query().count('id')
+
+        if (countCacheBooks === countDbBooks) {
+          const getCacheBooks = this.ioredis.getCacheData('books')
+          return Promise.resolve({ code: status.OK, message: 'Books data already to use', books: getCacheBooks })
+        } else {
+          this.ioredis.delCacheData('books')
+          await this.ioredis.setCacheData('books', newBooks)
+          return Promise.resolve({ code: status.OK, message: 'Books data already to use', books: newBooks })
+        }
+      } else {
+        await this.ioredis.setCacheData('books', newBooks)
+        return Promise.resolve({ code: status.OK, message: 'Books data already to use', books: newBooks })
+      }
     } catch (e: any) {
       return Promise.reject({ code: e.code, message: e.message })
     }

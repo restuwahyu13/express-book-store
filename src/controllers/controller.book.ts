@@ -73,40 +73,84 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
 
 export class Schema {
   static createSchemaAuthor = checkSchema({
-    first_name: {
+    name: {
       in: ['body'],
       notEmpty: {
-        errorMessage: 'first_name is required'
+        errorMessage: 'name is required'
       },
       isString: {
-        errorMessage: 'first_name must be string'
-      }
-    },
-    last_name: {
-      in: ['body'],
-      notEmpty: {
-        errorMessage: 'last_name is required'
+        errorMessage: 'name must be string'
       },
-      isString: {
-        errorMessage: 'last_name must be string'
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'name not including unique character'
       }
     },
-    place_of_birth: {
+    isbn: {
       in: ['body'],
       notEmpty: {
-        errorMessage: 'place_of_birth is required'
+        errorMessage: 'isbn is required'
       },
-      isString: {
-        errorMessage: 'place_of_birth must be string'
+      isNumeric: {
+        errorMessage: 'isbn must be number'
+      },
+      isLength: {
+        options: {
+          min: 12,
+          max: 12
+        },
+        errorMessage: 'isbn must be 12 character'
       }
     },
-    date_of_birth: {
+    release_date: {
       in: ['body'],
       notEmpty: {
-        errorMessage: 'date_of_birth is required'
+        errorMessage: 'release_date is required'
       },
       isDate: {
-        errorMessage: 'date_of_birth must be date'
+        errorMessage: 'release_date must be date'
+      }
+    },
+    publisher: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'publisher is required'
+      },
+      isString: {
+        errorMessage: 'publisher must be date'
+      },
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'publisher not including unique character'
+      }
+    },
+    price: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'price is required'
+      },
+      isNumeric: {
+        errorMessage: 'price must be numeric'
+      }
+    },
+    description: {
+      in: ['body'],
+      optional: true,
+      isString: {
+        errorMessage: 'description must be string'
+      },
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'publisher not including unique character'
+      }
+    },
+    author_id: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'author_id is required'
+      },
+      isUUID: {
+        errorMessage: 'author_id must be uuid'
       }
     }
   })
@@ -115,7 +159,7 @@ export class Schema {
     id: {
       in: ['params'],
       notEmpty: {
-        errorMessage: 'date_of_birth is required'
+        errorMessage: 'id is required'
       },
       isNumeric: {
         errorMessage: 'id must be number'
@@ -128,7 +172,7 @@ export class Schema {
       in: ['params']
     },
     notEmpty: {
-      errorMessage: 'date_of_birth is required'
+      errorMessage: 'id is required'
     },
     isNumeric: {
       errorMessage: 'id must be number'
@@ -139,46 +183,90 @@ export class Schema {
     id: {
       in: ['params'],
       notEmpty: {
-        errorMessage: 'date_of_birth is required'
+        errorMessage: 'id is required'
       },
       isNumeric: {
         errorMessage: 'id must be number'
       }
     },
-    first_name: {
+    name: {
       in: ['body'],
       notEmpty: {
-        errorMessage: 'first_name is required'
+        errorMessage: 'name is required'
       },
       isString: {
-        errorMessage: 'first_name must be string'
-      }
-    },
-    last_name: {
-      in: ['body'],
-      notEmpty: {
-        errorMessage: 'last_name is required'
+        errorMessage: 'name must be string'
       },
-      isString: {
-        errorMessage: 'last_name must be string'
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'name not including unique character'
       }
     },
-    place_of_birth: {
+    isbn: {
       in: ['body'],
       notEmpty: {
-        errorMessage: 'place_of_birth is required'
+        errorMessage: 'isbn is required'
       },
-      isString: {
-        errorMessage: 'place_of_birth must be string'
+      isNumeric: {
+        errorMessage: 'isbn must be number'
+      },
+      isLength: {
+        options: {
+          min: 12,
+          max: 12
+        },
+        errorMessage: 'isbn must be 12 character'
       }
     },
-    date_of_birth: {
+    release_date: {
       in: ['body'],
       notEmpty: {
-        errorMessage: 'date_of_birth is required'
+        errorMessage: 'release_date is required'
       },
       isDate: {
-        errorMessage: 'date_of_birth must be date'
+        errorMessage: 'release_date must be date'
+      }
+    },
+    publisher: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'publisher is required'
+      },
+      isString: {
+        errorMessage: 'publisher must be date'
+      },
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'publisher not including unique character'
+      }
+    },
+    price: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'price is required'
+      },
+      isNumeric: {
+        errorMessage: 'price must be numeric'
+      }
+    },
+    description: {
+      in: ['body'],
+      optional: true,
+      isString: {
+        errorMessage: 'description must be string'
+      },
+      custom: {
+        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        errorMessage: 'publisher not including unique character'
+      }
+    },
+    author_id: {
+      in: ['body'],
+      notEmpty: {
+        errorMessage: 'author_id is required'
+      },
+      isUUID: {
+        errorMessage: 'author_id must be uuid'
       }
     }
   })
