@@ -1,6 +1,14 @@
 import IORedis from 'ioredis'
 
-export class Redis {
+interface IRedis {
+  countCacheData(key: string): Promise<number>
+  keyCacheDataExist(key: string): Promise<number>
+  delCacheData(key: string): Promise<number>
+  setCacheData(key: string, data: Record<string, any>[]): Promise<number>
+  getCacheData(key: string): Promise<Record<string, any>[]>
+}
+
+export class Redis implements IRedis {
   private db: number
 
   constructor(db: number) {
@@ -39,7 +47,7 @@ export class Redis {
     return res
   }
 
-  public async getCacheData(key: string) {
+  public async getCacheData(key: string): Promise<Record<string, any>[]> {
     const res = await this.redis().hgetall(key)
     return JSON.parse(res.payload).data
   }
