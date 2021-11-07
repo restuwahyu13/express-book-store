@@ -20,30 +20,38 @@ export class ServiceBookImage extends ModelBookImage implements IServiceBookImag
         throw { code: status.CONFLICT, message: `Book image data already exist, for this id ${req.body.book_id}` }
       }
 
-      let fileUpload: any
+      let fileUpload: any = []
       let files = req.files as Express.Multer.File[]
+      let directory: string
 
       for (const i in files) {
-        const result = await cloudinaryStorage(files[i][0]['originalname'])
-        fileUpload.push(result.url)
+        if (process.platform !== 'win32') {
+          directory = `/tmp/${files[i][0]['originalname']}`
+        } else {
+          directory = `${process.env.TEMP}/${files[i][0]['originalname']}`
+        }
+        const result = await cloudinaryStorage(directory)
+        fileUpload.push(result.secure_url)
       }
 
-      const body: IBookImage = {
-        book_id: req.body.book_id,
-        first_image: fileUpload[0],
-        second_image: fileUpload[0],
-        third_image: fileUpload[0],
-        fourth_image: fileUpload[0],
-        fifth_image: fileUpload[0]
+      if (fileUpload.length > 0) {
+        const body: IBookImage = {
+          book_id: req.body.book_id,
+          first_image: fileUpload[0],
+          second_image: fileUpload[1],
+          third_image: fileUpload[2],
+          fourth_image: fileUpload[3],
+          fifth_image: fileUpload[4]
+        }
+
+        const addBookImage: ModelBookImage = await super.model().query().insert(body).first()
+
+        if (!addBookImage) {
+          throw { code: status.FORBIDDEN, message: 'Uploading new book image failed' }
+        }
       }
 
-      const addBookImage: ModelBookImage = await super.model().query().insert(body).first()
-
-      if (!addBookImage) {
-        throw { code: status.FORBIDDEN, message: 'Created new book image failed' }
-      }
-
-      return Promise.resolve({ code: status.CREATED, message: 'Created new book image success' })
+      return Promise.resolve({ code: status.CREATED, message: 'Uploading new book image success' })
     } catch (e: any) {
       return Promise.reject({ code: e.code, message: e.message })
     }
@@ -68,27 +76,35 @@ export class ServiceBookImage extends ModelBookImage implements IServiceBookImag
         throw { code: status.BAD_REQUEST, message: 'Column table miss match' }
       }
 
-      let fileUpload: any
+      let fileUpload: any = []
       let files = req.files as Express.Multer.File[]
+      let directory: string
 
       for (const i in files) {
-        const result = await cloudinaryStorage(files[i][0]['originalname'])
-        fileUpload.push(result.url)
+        if (process.platform !== 'win32') {
+          directory = `/tmp/${files[i][0]['originalname']}`
+        } else {
+          directory = `${process.env.TEMP}/${files[i][0]['originalname']}`
+        }
+        const result = await cloudinaryStorage(directory)
+        fileUpload.push(result.secure_url)
       }
 
-      const body: IBookImage = {
-        book_id: req.body.book_id,
-        first_image: fileUpload[0],
-        second_image: fileUpload[0],
-        third_image: fileUpload[0],
-        fourth_image: fileUpload[0],
-        fifth_image: fileUpload[0]
-      }
+      if (fileUpload.length > 0) {
+        const body: IBookImage = {
+          book_id: req.body.book_id,
+          first_image: fileUpload[0],
+          second_image: fileUpload[1],
+          third_image: fileUpload[2],
+          fourth_image: fileUpload[3],
+          fifth_image: fileUpload[4]
+        }
 
-      const updateBookImage: ModelBookImage = await this.model().query().updateAndFetchById(req.params.id, body)
+        const updateBookImage: ModelBookImage = await this.model().query().updateAndFetchById(req.params.id, body)
 
-      if (!updateBookImage) {
-        throw { code: status.FORBIDDEN, message: 'Updated book image data failed' }
+        if (!updateBookImage) {
+          throw { code: status.FORBIDDEN, message: 'Updated book image data failed' }
+        }
       }
 
       return Promise.resolve({ code: status.CREATED, message: 'Updated book image data success' })

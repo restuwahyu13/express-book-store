@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express, { Express, Router } from 'express'
 import http, { Server } from 'http'
 import os from 'os'
