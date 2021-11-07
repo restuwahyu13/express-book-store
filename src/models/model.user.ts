@@ -1,4 +1,4 @@
-import { Model, RelationMappings } from 'objection'
+import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
 import { DTOUser, DTOSecret } from '../dto/dto.user'
 import { hashPassword } from '../libs/lib.bcrypt'
 
@@ -22,7 +22,7 @@ export class ModelUser extends Model implements DTOUser {
   }
 
   async $beforeInsert(): Promise<void> {
-    if (this.role == 'admin') {
+    if (this.role === 'admin') {
       this.verified = true
       this.active = true
     }
@@ -31,11 +31,13 @@ export class ModelUser extends Model implements DTOUser {
     this.created_at = new Date()
   }
 
-  $beforeUpdate() {
-    if (this.role == 'admin') {
+  async $beforeUpdate(): Promise<void> {
+    if (this.role === 'admin') {
       this.verified = true
       this.active = true
     }
+    const password = await hashPassword(this.password)
+    this.password = password
     this.updated_at = new Date()
   }
 }
@@ -53,7 +55,7 @@ export class ModelSecret extends Model implements DTOSecret {
     return 'secret_key'
   }
 
-  static get relationMappings(): RelationMappings {
+  static get relationMappings(): RelationMappings | RelationMappingsThunk {
     return {
       user: {
         relation: Model.BelongsToOneRelation,

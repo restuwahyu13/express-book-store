@@ -1,6 +1,6 @@
 import { Request, Response } from '../helpers/helper.generic'
 
-interface IControllerBook {
+export interface IControllerBook {
   createControllerBook(req: Request, res: Response): Promise<any>
   resultsControllerBook(req: Request, res: Response): Promise<any>
   resultControllerBook(req: Request, res: Response): Promise<any>
@@ -8,7 +8,7 @@ interface IControllerBook {
   updateControllerBook(req: Request, res: Response): Promise<any>
 }
 
-interface IServiceBook {
+export interface IServiceBook {
   createServiceBook(req: Request): Promise<Record<string, any>>
   resultsServiceBook(): Promise<Record<string, any>>
   resultServiceBook(req: Request): Promise<Record<string, any>>
@@ -32,15 +32,16 @@ export type IBook = {
 
 export interface IControllerBookImage {
   createControllerBookImage(req: Request, res: Response): Promise<any>
-  resultsControllerBookImage(req: Request, res: Response): Promise<any>
-  resultControllerBookImage(req: Request, res: Response): Promise<any>
+  // resultsControllerBookImage(req: Request, res: Response): Promise<any>
+  // resultControllerBookImage(req: Request, res: Response): Promise<any>
   updateControllerBookImage(req: Request, res: Response): Promise<any>
 }
 
 export interface IServiceBookImage {
   createServiceBookImage(req: Request): Promise<Record<string, any>>
-  resultsServiceBookImage(): Promise<Record<string, any>>
-  resultServiceBookImage(req: Request): Promise<Record<string, any>>
+  // resultsServiceBookImage(): Promise<Record<string, any>>
+  // resultServiceBookImage(req: Request): Promise<Record<string, any>>
+  // deleteServiceBookImage(req: Request): Promise<Record<string, any>>
   updateServiceBookImage(req: Request): Promise<Record<string, any>>
 }
 

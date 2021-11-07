@@ -1,4 +1,4 @@
-import { Model, RelationMappings } from 'objection'
+import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
 import { DTOOrder, DTOOrderItem } from '../dto/dto.order'
 import { ModelBook } from './model.book'
 import { ModelUser } from './model.user'
@@ -60,7 +60,7 @@ export class ModelOrderItem extends Model implements DTOOrderItem {
     return 'order_item'
   }
 
-  static get relationMappings(): RelationMappings {
+  static get relationMappings(): RelationMappings | RelationMappingsThunk {
     return {
       order: {
         relation: Model.HasOneRelation,
@@ -89,7 +89,7 @@ export class ModelOrderItem extends Model implements DTOOrderItem {
     this.created_at = new Date()
   }
 
-  $beforeUpdate() {
+  $beforeUpdate(): void {
     this.updated_at = new Date()
   }
 }

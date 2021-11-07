@@ -7,12 +7,23 @@ import { Request } from '../helpers/helper.generic'
 import { Redis } from '../libs/lib.redis'
 
 export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
+  /**
+   * @method POST
+   * @description function for created new author
+   */
+
   async createServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const checkAuthor = await super.model().query().where({ first_name: req.body.first_name }).first()
 
       if (checkAuthor) {
         throw { code: status.CONFLICT, message: 'Author name already exist' }
+      }
+
+      const checkTableColumn = await super.model().query().column(Object.keys(req.body))
+
+      if (!checkTableColumn) {
+        throw { code: status.BAD_REQUEST, message: 'Column table miss match' }
       }
 
       const addAuthor = await super.model().query().insert(req.body).first()
@@ -26,6 +37,11 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
       return Promise.reject({ code: e.code, message: e.message })
     }
   }
+
+  /**
+   * @method GET
+   * @description function for get all authors
+   */
 
   async resultsServiceAuthor(): Promise<Record<string, any>> {
     try {
@@ -43,7 +59,7 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
           first_name: val.first_name,
           last_name: val.last_name,
           place_of_birth: val.place_of_birth,
-          date_of_birth: val.date_of_birth,
+          date_of_birth: new Date(val.date_of_birth).toLocaleDateString(),
           books: getBooks
         }
       })
@@ -82,6 +98,11 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
     }
   }
 
+  /**
+   * @method GET
+   * @description function for get author by specofic id
+   */
+
   async resultServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const getAuthor = await super.model().query().findById(req.params.id)
@@ -107,6 +128,11 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
     }
   }
 
+  /**
+   * @method DELETE
+   * @description function for deleted author by specific id
+   */
+
   async deleteServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const getAuthor = await super.model().query().findById(req.params.id)
@@ -127,12 +153,23 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
     }
   }
 
+  /**
+   * @method PUT
+   * @description function for updated author by specific id
+   */
+
   async updateServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const checkAuthor = await super.model().query().findById(req.params.id)
 
       if (!checkAuthor) {
         throw { code: status.NOT_FOUND, message: `Author data not found, for this id ${req.params.id}` }
+      }
+
+      const checkTableColumn = await super.model().query().column(Object.keys(req.body))
+
+      if (checkTableColumn.length) {
+        throw { code: status.BAD_REQUEST, message: 'Column table miss match' }
       }
 
       const updateAuthor = await super.model().query().updateAndFetchById(req.params.id, req.body)

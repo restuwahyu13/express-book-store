@@ -8,7 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     table.date('release_date').notNullable
     table.string('publisher').notNullable()
     table.float('price').notNullable()
-    table.float('description').nullable()
+    table.string('description').nullable()
     table.string('language').notNullable()
     table.integer('page').unsigned().notNullable()
     table.integer('author_id').unsigned().notNullable().references('id').inTable('author').index()

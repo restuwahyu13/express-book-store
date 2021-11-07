@@ -171,8 +171,8 @@ export class Schema {
       notEmpty: {
         errorMessage: 'author_id is required'
       },
-      isUUID: {
-        errorMessage: 'author_id must be uuid'
+      isNumeric: {
+        errorMessage: 'author_id must be number'
       }
     }
   })
@@ -309,8 +309,8 @@ export class Schema {
       notEmpty: {
         errorMessage: 'author_id is required'
       },
-      isUUID: {
-        errorMessage: 'author_id must be uuid'
+      isNumeric: {
+        errorMessage: 'author_id must be number'
       }
     }
   })

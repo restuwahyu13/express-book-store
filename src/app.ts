@@ -18,12 +18,14 @@ import { RouteAuthor } from './routes/route.author'
 import { RouteBook } from './routes/route.book'
 import { RouteOrder } from './routes/route.order'
 import { RouteUser } from './routes/route.user'
+import { RouteBookImage } from './routes/route.bookImage'
 
 class App {
   private app: Express
   private server: Server
   private author: Router
   private book: Router
+  private bookImage: Router
   private order: Router
   private user: Router
 
@@ -32,6 +34,7 @@ class App {
     this.server = http.createServer(this.app)
     this.author = new RouteAuthor().main()
     this.book = new RouteBook().main()
+    this.bookImage = new RouteBookImage().main()
     this.order = new RouteOrder().main()
     this.user = new RouteUser().main()
   }
@@ -88,6 +91,7 @@ class App {
   private async route(): Promise<void> {
     this.app.use('/api/v1/author', this.author)
     this.app.use('/api/v1/book', this.book)
+    this.app.use('/api/v1/book/upload', this.bookImage)
     this.app.use('/api/v1/order', this.order)
     this.app.use('/api/v1/user', this.user)
   }

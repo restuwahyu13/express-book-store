@@ -1,4 +1,4 @@
-import { Model, RelationMappings } from 'objection'
+import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
 import { ModelAuthor } from './model.author'
 import { DTOBook, DTOBookImage } from '../dto/dto.book'
 
@@ -20,7 +20,7 @@ export class ModelBook extends Model implements DTOBook {
     return 'book'
   }
 
-  static get relationMappings(): RelationMappings {
+  static get relationMappings(): RelationMappings | RelationMappingsThunk {
     return {
       author: {
         relation: Model.HasOneRelation,
@@ -42,7 +42,7 @@ export class ModelBook extends Model implements DTOBook {
     this.created_at = new Date()
   }
 
-  $beforeUpdate() {
+  $beforeUpdate(): void {
     this.release_date = new Date(this.release_date)
     this.updated_at = new Date()
   }
