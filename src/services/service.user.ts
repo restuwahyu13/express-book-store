@@ -5,7 +5,7 @@ import { IServiceUser, IUser } from '../interfaces/interface.user'
 import { Request } from '../helpers/helper.generic'
 
 export class ServiceUser extends ModelUser implements IServiceUser {
-  async registerServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
+  public async registerServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
       const checkUserAccount = await super.model().query().findOne({ email: req.body.email })
 
@@ -25,7 +25,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
     }
   }
 
-  async loginServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
+  public async loginServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -33,7 +33,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
     }
   }
 
-  async activationServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
+  public async activationServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -41,7 +41,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
     }
   }
 
-  async forgotServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
+  public async forgotServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -49,7 +49,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
     }
   }
 
-  async resendServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
+  public async resendServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -57,7 +57,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
     }
   }
 
-  async resetServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
+  public async resetServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {

@@ -6,7 +6,12 @@ import { ServiceBookImage } from '../services/service.bookImage'
 import { checkSchema } from 'express-validator'
 
 export class ControllerBookImage extends ServiceBookImage implements IControllerBookImage {
-  async createControllerBookImage(req: Request<IBookImage>, res: Response): Promise<any> {
+  /**
+   * @method POST
+   * @description function for created uploading file image for specific book id
+   */
+
+  public async createControllerBookImage(req: Request<IBookImage>, res: Response): Promise<any> {
     try {
       const result = await super.createServiceBookImage(req)
       if (result.code >= status.BAD_REQUEST) {
@@ -18,7 +23,12 @@ export class ControllerBookImage extends ServiceBookImage implements IController
     }
   }
 
-  async updateControllerBookImage(req: Request<IBookImage>, res: Response): Promise<any> {
+  /**
+   * @method PUT
+   * @description function for updated uploading file image for specific book id
+   */
+
+  public async updateControllerBookImage(req: Request<IBookImage>, res: Response): Promise<any> {
     try {
       const result = await super.updateServiceBookImage(req)
       if (result.code >= status.BAD_REQUEST) {

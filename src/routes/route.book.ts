@@ -10,7 +10,7 @@ export class RouteBook extends ControllerBook {
     this.router = Router() as Router
   }
 
-  main(): Router {
+  public main(): Router {
     this.router.post('/', [...Schema.createSchemaBook, validator()], this.createControllerBook)
     this.router.get('/', this.resultsControllerBook)
     this.router.get('/:id', [...Schema.resultSchemaBook, validator()], this.resultControllerBook)

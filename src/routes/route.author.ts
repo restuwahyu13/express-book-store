@@ -10,7 +10,7 @@ export class RouteAuthor extends ControllerAuthor {
     this.router = Router() as Router
   }
 
-  main(): Router {
+  public main(): Router {
     this.router.post('/', [...Schema.createSchemaAuthor, validator()], this.createControllerAuthor)
     this.router.get('/', this.resultsControllerAuthor)
     this.router.get('/:id', [...Schema.resultSchemaAuthor, validator()], this.resultControllerAuthor)

@@ -9,7 +9,7 @@ export class RouteOrder extends ControllerOrder {
     this.router = Router() as Router
   }
 
-  main(): Router {
+  public main(): Router {
     this.router.post('/', this.createControllerOrder)
     this.router.get('/', this.resultsControllerOrder)
     this.router.get('/:id', this.resultServiceOrder)

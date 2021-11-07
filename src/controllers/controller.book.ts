@@ -6,7 +6,12 @@ import { Request, Response } from '../helpers/helper.generic'
 import { checkSchema } from 'express-validator'
 
 export class ControllerBook extends ServiceBook implements IControllerBook {
-  async createControllerBook(req: Request<IBook>, res: Response): Promise<any> {
+  /**
+   * @method POST
+   * @description function for add new book data
+   */
+
+  public async createControllerBook(req: Request<IBook>, res: Response): Promise<any> {
     try {
       const result = await super.createServiceBook(req)
       if (result.code >= status.BAD_REQUEST) {
@@ -18,7 +23,12 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
     }
   }
 
-  async resultsControllerBook(req: Request<IBook>, res: Response): Promise<any> {
+  /**
+   * @method GET
+   * @description function for get all book data
+   */
+
+  public async resultsControllerBook(req: Request<IBook>, res: Response): Promise<any> {
     try {
       const result = await super.resultsServiceBook()
       if (result.code >= status.BAD_REQUEST) {
@@ -30,7 +40,12 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
     }
   }
 
-  async resultControllerBook(req: Request<IBook>, res: Response): Promise<any> {
+  /**
+   * @method GET
+   * @description function for get book data by specific id
+   */
+
+  public async resultControllerBook(req: Request<IBook>, res: Response): Promise<any> {
     try {
       const result = await super.resultServiceBook(req)
       if (result.code >= status.BAD_REQUEST) {
@@ -42,7 +57,12 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
     }
   }
 
-  async deleteControllerBook(req: Request<IBook>, res: Response): Promise<any> {
+  /**
+   * @method DELETE
+   * @description function for delete book data by sepecific id
+   */
+
+  public async deleteControllerBook(req: Request<IBook>, res: Response): Promise<any> {
     try {
       const result = await super.deleteServiceBook(req)
       if (result.code >= status.BAD_REQUEST) {
@@ -54,7 +74,12 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
     }
   }
 
-  async updateControllerBook(req: Request<IBook>, res: Response): Promise<any> {
+  /**
+   * @method PUT
+   * @description function for update book data by specific book id
+   */
+
+  public async updateControllerBook(req: Request<IBook>, res: Response): Promise<any> {
     try {
       const result = await super.updateServiceBook(req)
       if (result.code >= status.BAD_REQUEST) {

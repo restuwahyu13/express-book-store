@@ -11,7 +11,7 @@ export class ServiceBook extends ModelBook implements IServiceBook {
    * @description function for add new book data
    */
 
-  async createServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
+  public async createServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
     try {
       const checkBook: ModelBook = await super.model().query().where({ isbn: req.body.isbn }).first()
 
@@ -42,7 +42,7 @@ export class ServiceBook extends ModelBook implements IServiceBook {
    * @description function for get all book data
    */
 
-  async resultsServiceBook(): Promise<Record<string, any>> {
+  public async resultsServiceBook(): Promise<Record<string, any>> {
     try {
       const ioredis: InstanceType<typeof Redis> = new Redis(1)
       const getBooks: ModelBook[] = await super
@@ -124,7 +124,7 @@ export class ServiceBook extends ModelBook implements IServiceBook {
    * @description function for get book data by specific id
    */
 
-  async resultServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
+  public async resultServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
     try {
       const getBook: ModelBook = await super
         .model()
@@ -173,7 +173,7 @@ export class ServiceBook extends ModelBook implements IServiceBook {
    * @description function for delete book data by sepecific id
    */
 
-  async deleteServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
+  public async deleteServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
     try {
       const getBook: ModelBook = await this.model().query().findById(req.params.id)
 
@@ -198,7 +198,7 @@ export class ServiceBook extends ModelBook implements IServiceBook {
    * @description function for update book data by specific book id
    */
 
-  async updateServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
+  public async updateServiceBook(req: Request<IBook>): Promise<Record<string, any>> {
     try {
       const checkBook: ModelBook = await this.model().query().findById(req.params.id)
 

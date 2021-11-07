@@ -12,7 +12,7 @@ export class ServiceBookImage extends ModelBookImage implements IServiceBookImag
    * @description function for created uploading file image for specific book id
    */
 
-  async createServiceBookImage(req: Request<IBookImage>): Promise<Record<string, any>> {
+  public async createServiceBookImage(req: Request<IBookImage>): Promise<Record<string, any>> {
     try {
       const checkBookImage: ModelBookImage = await super.model().query().where({ book_id: req.body.book_id }).first()
 
@@ -59,10 +59,10 @@ export class ServiceBookImage extends ModelBookImage implements IServiceBookImag
 
   /**
    * @method PUT
-   * @description function for update uploading file image for specific book id
+   * @description function for updated uploading file image for specific book id
    */
 
-  async updateServiceBookImage(req: Request<IBookImage>): Promise<Record<string, any>> {
+  public async updateServiceBookImage(req: Request<IBookImage>): Promise<Record<string, any>> {
     try {
       const checkBookImage: ModelBookImage = await this.model().query().findById(req.params.id)
 

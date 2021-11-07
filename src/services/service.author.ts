@@ -12,7 +12,7 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
    * @description function for created new author
    */
 
-  async createServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
+  public async createServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const checkAuthor = await super.model().query().where({ first_name: req.body.first_name }).first()
 
@@ -43,7 +43,7 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
    * @description function for get all authors
    */
 
-  async resultsServiceAuthor(): Promise<Record<string, any>> {
+  public async resultsServiceAuthor(): Promise<Record<string, any>> {
     try {
       const ioredis = new Redis(0)
       const getAuthors = await super.model().query().select('*').orderBy('created_at', 'desc')
@@ -100,10 +100,10 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
 
   /**
    * @method GET
-   * @description function for get author by specofic id
+   * @description function for get author by specific id
    */
 
-  async resultServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
+  public async resultServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const getAuthor = await super.model().query().findById(req.params.id)
 
@@ -133,7 +133,7 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
    * @description function for deleted author by specific id
    */
 
-  async deleteServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
+  public async deleteServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const getAuthor = await super.model().query().findById(req.params.id)
 
@@ -158,7 +158,7 @@ export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
    * @description function for updated author by specific id
    */
 
-  async updateServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
+  public async updateServiceAuthor(req: Request<IAuthor>): Promise<Record<string, any>> {
     try {
       const checkAuthor = await super.model().query().findById(req.params.id)
 

@@ -6,7 +6,12 @@ import { ServiceAuthor } from '../services/service.author'
 import { Request, Response } from '../helpers/helper.generic'
 
 export class ControllerAuthor extends ServiceAuthor implements IControllerAuthor {
-  async createControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
+  /**
+   * @method POST
+   * @description function for created new author
+   */
+
+  public async createControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
     try {
       const result = await super.createServiceAuthor(req)
       if (result.code >= status.BAD_REQUEST) {
@@ -18,7 +23,12 @@ export class ControllerAuthor extends ServiceAuthor implements IControllerAuthor
     }
   }
 
-  async resultsControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
+  /**
+   * @method GET
+   * @description function for get all authors
+   */
+
+  public async resultsControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resultsServiceAuthor()
       if (result.code >= status.BAD_REQUEST) {
@@ -30,7 +40,12 @@ export class ControllerAuthor extends ServiceAuthor implements IControllerAuthor
     }
   }
 
-  async resultControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
+  /**
+   * @method GET
+   * @description function for get author by specific id
+   */
+
+  public async resultControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resultServiceAuthor(req)
       if (result.code >= status.BAD_REQUEST) {
@@ -42,7 +57,12 @@ export class ControllerAuthor extends ServiceAuthor implements IControllerAuthor
     }
   }
 
-  async deleteControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
+  /**
+   * @method DELETE
+   * @description function for deleted author by specific id
+   */
+
+  public async deleteControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.deleteServiceAuthor(req)
       if (result.code >= status.BAD_REQUEST) {
@@ -54,7 +74,12 @@ export class ControllerAuthor extends ServiceAuthor implements IControllerAuthor
     }
   }
 
-  async updateControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
+  /**
+   * @method PUT
+   * @description function for updated author by specific id
+   */
+
+  public async updateControllerAuthor(req: Request<IAuthor>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.updateServiceAuthor(req)
       if (result.code >= status.BAD_REQUEST) {

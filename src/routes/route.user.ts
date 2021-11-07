@@ -9,7 +9,7 @@ export class RouteUser extends ControllerUser {
     this.router = Router() as Router
   }
 
-  main(): Router {
+  public main(): Router {
     this.router.post('/auth/register', this.registerControllerUser)
     this.router.post('/auth/login', this.loginControllerUser)
     this.router.get('/auth/activation-account/:id', this.activationControllerUser)

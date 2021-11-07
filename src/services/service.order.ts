@@ -5,7 +5,7 @@ import { IOrder, IServiceOrder } from '../interfaces/interface.order'
 import { Request } from '../helpers/helper.generic'
 
 export class ServiceOrder extends ModelUser implements IServiceOrder {
-  async createServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
+  public async createServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -13,7 +13,7 @@ export class ServiceOrder extends ModelUser implements IServiceOrder {
     }
   }
 
-  async resultsServiceOrder(): Promise<Record<string, any>> {
+  public async resultsServiceOrder(): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -21,7 +21,7 @@ export class ServiceOrder extends ModelUser implements IServiceOrder {
     }
   }
 
-  async resultServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
+  public async resultServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -29,7 +29,7 @@ export class ServiceOrder extends ModelUser implements IServiceOrder {
     }
   }
 
-  async deleteServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
+  public async deleteServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {
@@ -37,7 +37,7 @@ export class ServiceOrder extends ModelUser implements IServiceOrder {
     }
   }
 
-  async updateServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
+  public async updateServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {
     try {
       return Promise.resolve({ code: status.CREATED, message: 'Updated book data success' })
     } catch (e: any) {

@@ -11,7 +11,7 @@ export class RouteBookImage extends ControllerBookImage {
     this.router = Router() as Router
   }
 
-  main(): Router {
+  public main(): Router {
     this.router.post(
       '/',
       [
