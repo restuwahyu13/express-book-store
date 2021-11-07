@@ -75,7 +75,6 @@ export class ServiceBook extends ModelBook implements IServiceBook {
           page: val.page,
           description: val.description,
           author: {
-            id: val.author_id,
             first_name: val.first_name,
             last_name: val.last_name,
             place_of_birth: val.place_of_birth,
@@ -130,7 +129,7 @@ export class ServiceBook extends ModelBook implements IServiceBook {
       const getBook: ModelBook = await super
         .model()
         .query()
-        .select('book.*', 'book.id as bookId', 'author.*', 'book.image.*')
+        .select('book.*', 'book.id as bookId', 'author.*', 'book_image.*')
         .leftJoin('author', 'author.id', 'book.author_id')
         .leftJoin('book_image', 'book_image.book_id', 'book.id')
         .where('book.id', req.params.id)
@@ -147,7 +146,6 @@ export class ServiceBook extends ModelBook implements IServiceBook {
         release: getBook.release_date,
         publisher: getBook.publisher,
         author: {
-          id: getBook.author_id,
           first_name: getBook['first_name'],
           last_name: getBook['last_name'],
           place_of_birth: getBook['place_of_birth'],

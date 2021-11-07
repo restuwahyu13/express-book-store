@@ -29,6 +29,14 @@ export class ModelBook extends Model implements DTOBook {
           from: `${this.tableName}.id`,
           to: `${ModelAuthor.tableName}.author_id`
         }
+      },
+      book_image: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ModelBook,
+        join: {
+          from: `${this.tableName}.id`,
+          to: `${ModelBookImage.tableName}.book_id`
+        }
       }
     }
   }
