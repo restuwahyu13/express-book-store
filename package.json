@@ -9,7 +9,7 @@
   "scripts": {
     "cleanup": "rimraf dist",
     "build": "npm run cleanup && tsc --pretty",
-    "start": "node dist/app.js",
+    "start": "node dist/src/app.js",
     "dev": "tsnd --poll --respawn --watch src/**/*.{ts} src/app.ts",
     "kmig": "npx knex --knexfile knexfile.ts migrate:latest",
     "kroll": "npx knex --knexfile knexfile.ts migrate:rollback",

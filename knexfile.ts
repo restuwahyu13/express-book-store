@@ -1,11 +1,12 @@
 import 'dotenv/config'
 import path from 'path'
+import { Knex } from 'knex'
 
-export const development: Record<string, any> = {
+export const development: Knex.Config = {
   client: process.env.DB_CLIENT,
   connection: {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    port: parseInt(process.env.DB_PORT as string),
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
@@ -22,22 +23,22 @@ export const development: Record<string, any> = {
   },
   log: {
     error: (msg: string | any): void => console.error(msg),
-    warn: (msg: string | any): void => console.error(msg)
+    warn: (msg: string | any): void => console.info(msg)
   }
 }
 
-export const staging: Record<string, any> = {
+export const staging: Knex.Config = {
   client: process.env.DB_CLIENT,
   connection: {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    port: parseInt(process.env.DB_PORT as string),
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
   },
   pool: {
-    min: 1,
-    max: 5
+    min: 5,
+    max: 10
   },
   migrations: {
     directory: path.resolve(process.cwd(), 'src/databases/migrations/')
@@ -47,22 +48,22 @@ export const staging: Record<string, any> = {
   },
   log: {
     error: (msg: string | any): void => console.error(msg),
-    warn: (msg: string | any): void => console.error(msg)
+    warn: (msg: string | any): void => console.info(msg)
   }
 }
 
-export const production: Record<string, any> = {
+export const production: Knex.Config = {
   client: process.env.DB_CLIENT,
   connection: {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    port: parseInt(process.env.DB_PORT as string),
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
   },
   pool: {
-    min: 1,
-    max: 5
+    min: 10,
+    max: 20
   },
   migrations: {
     directory: path.resolve(process.cwd(), 'src/databases/migrations/')
@@ -72,6 +73,6 @@ export const production: Record<string, any> = {
   },
   log: {
     error: (msg: string | any): void => console.error(msg),
-    warn: (msg: string | any): void => console.error(msg)
+    warn: (msg: string | any): void => console.info(msg)
   }
 }

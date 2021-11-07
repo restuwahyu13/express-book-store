@@ -1,29 +1,30 @@
 {
-	"compilerOptions": {
-		"outDir": "dist",
-		"target": "ESNext",
-		"module": "CommonJS",
-		"moduleResolution": "Node",
-		"typeRoots": ["node_modules/@types/", "src/interfaces/", "src/dto/"],
-		"strict": true,
-		"importHelpers": true,
-		"downlevelIteration": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true,
-		"skipLibCheck": true,
-		"allowUmdGlobalAccess": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"noImplicitAny": false,
-		"noImplicitReturns": false
-	},
-	"include": ["src/app.ts", "knexfile.ts"],
-	"exclude": ["node_modules", "__test__", "dist", "coverages"],
-	"ts-node": {
-		"compilerHost": true,
-		"transpileOnly": true,
-		"files": true,
-		"pretty": true
-	}
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "typeRoots": ["node_modules/@types/", "src/interfaces/", "src/dto/"],
+    "strict": true,
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "allowUmdGlobalAccess": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": false
+  },
+  "include": ["src/app.ts", "knexfile.ts"],
+  "exclude": ["node_modules", "__test__", "dist", "coverages"],
+  "ts-node": {
+    "compilerHost": true,
+    "transpileOnly": true,
+    "files": true,
+    "pretty": true
+  }
 }
