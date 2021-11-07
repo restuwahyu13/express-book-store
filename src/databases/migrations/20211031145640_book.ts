@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('id').primary().unique().index()
     table.string('name').notNullable()
     table.bigInteger('isbn').unique().unsigned().notNullable()
-    table.date('release_date').notNullable
+    table.date('release_date').notNullable()
     table.string('publisher').notNullable()
     table.float('price').notNullable()
     table.string('description').nullable()

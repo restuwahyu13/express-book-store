@@ -6,6 +6,8 @@ import { ModelUser } from './model.user'
 export class ModelOrder extends Model implements DTOOrder {
   id!: number
   name!: string
+  email!: string
+  phone!: number
   address!: string
   state!: string
   city!: string
