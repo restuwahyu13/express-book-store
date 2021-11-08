@@ -1,6 +1,6 @@
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
-import { DTOAuthor } from '../dto/dto.author'
-import { ModelBook } from './model.book'
+import { DTOAuthor } from '@/dto/dto.author'
+import { ModelBook } from '@/models/model.book'
 
 export class ModelAuthor extends Model implements DTOAuthor {
   id!: number

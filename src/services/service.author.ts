@@ -1,10 +1,10 @@
 import { StatusCodes as status } from 'http-status-codes'
 
-import { ModelAuthor } from '../models/model.author'
-import { ModelBook } from '../models/model.book'
-import { IServiceAuthor, IAuthor } from '../interfaces/interface.author'
-import { Request } from '../helpers/helper.generic'
-import { Redis } from '../libs/lib.redis'
+import { ModelAuthor } from '@/models/model.author'
+import { ModelBook } from '@/models/model.book'
+import { IServiceAuthor, IAuthor } from '@/interfaces/interface.author'
+import { Request } from '@/helpers/helper.generic'
+import { Redis } from '@/libs/lib.redis'
 
 export class ServiceAuthor extends ModelAuthor implements IServiceAuthor {
   /**

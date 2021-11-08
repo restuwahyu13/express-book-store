@@ -1,10 +1,23 @@
 {
   "compilerOptions": {
     "outDir": "dist",
+    "baseUrl": "src",
     "target": "ESNext",
     "module": "CommonJS",
     "moduleResolution": "Node",
     "typeRoots": ["node_modules/@types/", "src/interfaces/", "src/dto/"],
+    "paths": {
+      "@/*": ["*"],
+      "@controllers/*": ["controllers/*"],
+      "@dto/*": ["dto/*"],
+      "@helpers/*": ["helpers/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@libs/*": ["libs/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@models/*": ["models/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"]
+    },
     "strict": true,
     "importHelpers": true,
     "downlevelIteration": true,
@@ -16,11 +29,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "declaration": true,
+    "pretty": true,
+    "noEmit": false,
     "noImplicitAny": false,
     "noImplicitReturns": false
   },
-  "include": ["src/app.ts", "knexfile.ts"],
-  "exclude": ["node_modules", "__test__", "dist", "coverages"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "__test__", "dist"],
   "ts-node": {
     "compilerHost": true,
     "transpileOnly": true,

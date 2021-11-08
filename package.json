@@ -8,9 +8,9 @@
   ],
   "scripts": {
     "cleanup": "rimraf dist",
-    "build": "npm run cleanup && tsc --pretty",
+    "build": "npm run cleanup && tsc && npx tsc-alias",
     "start": "node dist/src/app.js",
-    "dev": "tsnd --poll --respawn --watch src/**/*.{ts} src/app.ts",
+    "dev": "tsnd --poll --respawn --watch src/**/*.{ts} -r tsconfig-paths/register src/app.ts",
     "kmig": "npx knex --knexfile knexfile.ts migrate:latest",
     "kroll": "npx knex --knexfile knexfile.ts migrate:rollback",
     "klist": "npx knex --knexfile knexfile.ts migrate:list"
@@ -89,6 +89,7 @@
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^3.11.0",
     "tslib": "^2.3.1",
     "typescript": "^4.4.4"
   }

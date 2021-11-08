@@ -1,9 +1,9 @@
 import { StatusCodes as status } from 'http-status-codes'
 
-import { ModelBook } from '../models/model.book'
-import { IServiceBook, IBook } from '../interfaces/interface.book'
-import { Request } from '../helpers/helper.generic'
-import { Redis } from '../libs/lib.redis'
+import { ModelBook } from '@/models/model.book'
+import { IServiceBook, IBook } from '@/interfaces/interface.book'
+import { Request } from '@/helpers/helper.generic'
+import { Redis } from '@/libs/lib.redis'
 
 export class ServiceBook extends ModelBook implements IServiceBook {
   /**

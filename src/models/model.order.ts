@@ -1,7 +1,7 @@
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
-import { DTOOrder, DTOOrderItem } from '../dto/dto.order'
-import { ModelBook } from './model.book'
-import { ModelUser } from './model.user'
+import { DTOOrder, DTOOrderItem } from '@/dto/dto.order'
+import { ModelBook } from '@models/model.book'
+import { ModelUser } from '@models/model.user'
 
 export class ModelOrder extends Model implements DTOOrder {
   id!: number
@@ -21,7 +21,7 @@ export class ModelOrder extends Model implements DTOOrder {
     return 'order'
   }
 
-  static get relationMappings(): RelationMappings {
+  static get relationMappings(): RelationMappings | RelationMappingsThunk {
     return {
       user: {
         relation: Model.HasOneRelation,

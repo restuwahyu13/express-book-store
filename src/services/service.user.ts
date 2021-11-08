@@ -1,8 +1,8 @@
 import { StatusCodes as status } from 'http-status-codes'
 
-import { ModelUser } from '../models/model.user'
-import { IServiceUser, IUser } from '../interfaces/interface.user'
-import { Request } from '../helpers/helper.generic'
+import { ModelUser } from '@/models/model.user'
+import { IServiceUser, IUser } from '@/interfaces/interface.user'
+import { Request } from '@/helpers/helper.generic'
 
 export class ServiceUser extends ModelUser implements IServiceUser {
   public async registerServiceUser(req: Request<IUser>): Promise<Record<string, any>> {

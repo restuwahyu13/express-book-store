@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { ControllerBook, Schema } from '../controllers/controller.book'
-import { validator } from '../libs/lib.validator'
+import { ControllerBook, Schema } from '@/controllers/controller.book'
+import { validator } from '@/libs/lib.validator'
 
 export class RouteBook extends ControllerBook {
   private router: Router

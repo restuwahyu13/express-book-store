@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { ControllerOrder } from '../controllers/controller.order'
+
+import { ControllerOrder } from '@/controllers/controller.order'
 
 export class RouteOrder extends ControllerOrder {
   private router: Router

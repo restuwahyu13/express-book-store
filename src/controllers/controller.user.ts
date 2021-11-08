@@ -1,9 +1,9 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { checkSchema } from 'express-validator'
 
-import { IUser, IControllerUser } from '../interfaces/interface.user'
-import { ServiceUser } from '../services/service.user'
-import { Request, Response } from '../helpers/helper.generic'
+import { IUser, IControllerUser } from '@/interfaces/interface.user'
+import { ServiceUser } from '@/services/service.user'
+import { Request, Response } from '@/helpers/helper.generic'
 
 export class ControllerUser extends ServiceUser implements IControllerUser {
   async registerControllerUser(req: Request<IUser>, res: Response): Promise<any> {

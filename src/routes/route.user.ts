@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { ControllerUser } from '../controllers/controller.user'
+import { ControllerUser } from '@/controllers/controller.user'
 
 export class RouteUser extends ControllerUser {
   private router: Router

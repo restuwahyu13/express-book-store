@@ -1,8 +1,8 @@
 import { StatusCodes as status } from 'http-status-codes'
 
-import { IBookImage, IControllerBookImage } from '../interfaces/interface.book'
-import { Request, Response } from '../helpers/helper.generic'
-import { ServiceBookImage } from '../services/service.bookImage'
+import { IBookImage, IControllerBookImage } from '@/interfaces/interface.book'
+import { Request, Response } from '@/helpers/helper.generic'
+import { ServiceBookImage } from '@/services/service.bookImage'
 import { checkSchema } from 'express-validator'
 
 export class ControllerBookImage extends ServiceBookImage implements IControllerBookImage {

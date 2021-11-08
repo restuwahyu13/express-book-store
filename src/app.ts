@@ -15,11 +15,11 @@ import rateLimit from 'express-rate-limit'
 import SlowDown from 'express-slow-down'
 
 import * as knexfile from '../knexfile'
-import { RouteAuthor } from './routes/route.author'
-import { RouteBook } from './routes/route.book'
-import { RouteOrder } from './routes/route.order'
-import { RouteUser } from './routes/route.user'
-import { RouteBookImage } from './routes/route.bookImage'
+import { RouteAuthor } from '@routes/route.author'
+import { RouteBook } from '@routes/route.book'
+import { RouteOrder } from '@routes/route.order'
+import { RouteUser } from '@routes/route.user'
+import { RouteBookImage } from '@routes/route.bookImage'
 
 class App {
   private app: Express

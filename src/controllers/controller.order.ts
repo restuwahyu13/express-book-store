@@ -1,9 +1,9 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { checkSchema } from 'express-validator'
 
-import { IOrder, IControllerOrder } from '../interfaces/interface.order'
-import { Request, Response } from '../helpers/helper.generic'
-import { ServiceOrder } from '../services/service.order'
+import { IOrder, IControllerOrder } from '@/interfaces/interface.order'
+import { Request, Response } from '@/helpers/helper.generic'
+import { ServiceOrder } from '@/services/service.order'
 
 export class ControllerOrder extends ServiceOrder implements IControllerOrder {
   async createControllerOrder(req: Request<IOrder>, res: Response): Promise<any> {

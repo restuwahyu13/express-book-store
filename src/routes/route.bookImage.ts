@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { upload } from '../libs/lib.multer'
 
-import { ControllerBookImage } from '../controllers/controller.bookImage'
+import { ControllerBookImage } from '@/controllers/controller.bookImage'
+import { upload } from '@/libs/lib.multer'
 
 export class RouteBookImage extends ControllerBookImage {
   private router: Router
