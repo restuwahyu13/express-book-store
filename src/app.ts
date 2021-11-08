@@ -14,7 +14,7 @@ import zlib from 'zlib'
 import rateLimit from 'express-rate-limit'
 import SlowDown from 'express-slow-down'
 
-import * as knexfile from '../knexfile'
+import * as knexfile from '@/knexfile'
 import { RouteAuthor } from '@routes/route.author'
 import { RouteBook } from '@routes/route.book'
 import { RouteOrder } from '@routes/route.order'
