@@ -8,6 +8,7 @@
     "typeRoots": ["node_modules/@types/", "src/interfaces/", "src/dto/"],
     "paths": {
       "@/*": ["*"],
+      "@configs/*": ["configs/*"],
       "@controllers/*": ["controllers/*"],
       "@dto/*": ["dto/*"],
       "@helpers/*": ["helpers/*"],
@@ -29,6 +30,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "declaration": true,
+    "resolveJsonModule": true,
     "pretty": true,
     "noEmit": false,
     "noImplicitAny": false,

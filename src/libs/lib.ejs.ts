@@ -4,7 +4,7 @@
 
 // export const renderTemplate = async (to: string, token: string, template: string): Promise<string | boolean> => {
 //   try {
-//     const url: string = process.env.URL
+//     const url: string = process.env.URL || ''
 //     const dirname: string = path.resolve(__dirname, `../templates/${template}.ejs`)
 
 //     if (fs.existsSync(dirname)) {
