@@ -6,7 +6,7 @@ export async function up(knex: Knex): Promise<void> {
     .withSchema('secret')
     .createTable('secret_key', (table: Knex.TableBuilder) => {
       table.increments('id').primary().unique().index()
-      table.integer('user_id').references('id').inTable('user').unsigned().nullable()
+      table.integer('user_id').references('id').inTable('user').unsigned().nullable().index()
       table.string('access_token').nullable()
       table.datetime('expired_at').nullable()
       table.enum('type', ['login', 'activation', 'reset password']).nullable()

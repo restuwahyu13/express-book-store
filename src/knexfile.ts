@@ -1,6 +1,9 @@
-import 'dotenv/config'
+import { config } from 'dotenv'
 import path from 'path'
 import { Knex } from 'knex'
+
+// load .env file outside src
+config({ path: '../.env' })
 
 export const development: Knex.Config = {
   client: process.env.DB_CLIENT,
@@ -16,10 +19,10 @@ export const development: Knex.Config = {
     max: 5
   },
   migrations: {
-    directory: path.resolve(process.cwd(), 'src/databases/migrations/')
+    directory: path.resolve(process.cwd(), 'databases/migrations/')
   },
   seeds: {
-    directory: path.resolve('src/databases/seeds/')
+    directory: path.resolve('databases/seeds/')
   },
   log: {
     error: (msg: string | any): void => console.error(msg),
@@ -41,10 +44,10 @@ export const staging: Knex.Config = {
     max: 10
   },
   migrations: {
-    directory: path.resolve(process.cwd(), 'src/databases/migrations/')
+    directory: path.resolve(process.cwd(), 'databases/migrations/')
   },
   seeds: {
-    directory: path.resolve('src/databases/seeds/')
+    directory: path.resolve('databases/seeds/')
   },
   log: {
     error: (msg: string | any): void => console.error(msg),
@@ -66,10 +69,10 @@ export const production: Knex.Config = {
     max: 20
   },
   migrations: {
-    directory: path.resolve(process.cwd(), 'src/databases/migrations/')
+    directory: path.resolve(process.cwd(), 'databases/migrations/')
   },
   seeds: {
-    directory: path.resolve('src/databases/seeds/')
+    directory: path.resolve('databases/seeds/')
   },
   log: {
     error: (msg: string | any): void => console.error(msg),
