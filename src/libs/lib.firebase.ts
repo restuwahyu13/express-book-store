@@ -7,8 +7,8 @@ export async function sendNotification(title: string, body: string, data: Record
     const notification: firebase.messaging.MulticastMessage = { notification: { title, body }, data, tokens }
     const res: firebase.messaging.BatchResponse = await firebase.messaging().sendMulticast(notification)
     return res
-  } catch (err: any) {
-    return Promise.reject(new BookStoreError(err.message))
+  } catch (e: any) {
+    return Promise.reject(new BookStoreError(`Firebase notification error: ${e.message}`))
   }
 }
 

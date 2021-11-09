@@ -16,6 +16,6 @@ export const cloudinaryStorage = async (filename: string): Promise<UploadApiResp
     const res = (await cloudStorage.uploader.upload(filename, { resource_type: 'auto' })) as UploadApiResponse
     return res
   } catch (e: any) {
-    throw Promise.reject(new BookStoreError(e))
+    return Promise.reject(new BookStoreError(`Uploading file error: ${e.message}`))
   }
 }
