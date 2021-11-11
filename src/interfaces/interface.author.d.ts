@@ -1,4 +1,4 @@
-import { Request, Response } from '../helpers/helper.generic'
+import { Request, Response } from '@/helpers/helper.generic'
 
 export interface IControllerAuthor {
   createControllerAuthor(req: Request, res: Response): Promise<any>
@@ -17,10 +17,10 @@ export interface IServiceAuthor {
 }
 
 export type IAuthor = {
-  readonly first_name: string
-  readonly last_name: string
-  readonly place_of_birth: string
-  readonly date_of_birth: any
-  readonly created_at?: any
-  readonly updated_at?: any
+  first_name: string
+  last_name: string
+  place_of_birth: string
+  date_of_birth: any
+  created_at?: any
+  updated_at?: any
 }

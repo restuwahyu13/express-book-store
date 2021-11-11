@@ -1,6 +1,6 @@
-import { Request, Response } from '../helpers/helper.generic'
+import { Request, Response } from '@/helpers/helper.generic'
 
-interface IControllerOrder {
+export interface IControllerOrder {
   createControllerOrder(req: Request, res: Response): Promise<any>
   resultsControllerOrder(req: Request, res: Response): Promise<any>
   resultControllerOrder(req: Request, res: Response): Promise<any>
@@ -8,7 +8,7 @@ interface IControllerOrder {
   updateControllerOrder(req: Request, res: Response): Promise<any>
 }
 
-interface IServiceOrder {
+export interface IServiceOrder {
   createServiceOrder(req: Request): Promise<Record<string, any>>
   resultsServiceOrder(): Promise<Record<string, any>>
   resultServiceOrder(req: Request): Promise<Record<string, any>>
@@ -17,25 +17,25 @@ interface IServiceOrder {
 }
 
 export type IOrder = {
-  readonly name: string
-  readonly address: string
-  readonly state: string
-  readonly city: string
-  readonly country: string
-  readonly postcode: number
-  readonly user_id: number
-  readonly created_at?: any
-  readonly updated_at?: any
+  name: string
+  address: string
+  state: string
+  city: string
+  country: string
+  postcode: number
+  user_id: number
+  created_at?: any
+  updated_at?: any
 }
 
-interface IControllerOrderItem {
+export interface IControllerOrderItem {
   resultsControllerOrderItem(req: Request, res: Response): Promise<any>
   resultControllerOrderItem(req: Request, res: Response): Promise<any>
   deleteControllerOrderItem(req: Request, res: Response): Promise<any>
   updateControllerOrderItem(req: Request, res: Response): Promise<any>
 }
 
-interface IServiceOrderItem {
+export interface IServiceOrderItem {
   resultsServiceOrderItem(): Promise<Record<string, any>>
   resultServiceOrderItem(req: Request): Promise<Record<string, any>>
   deleteServiceOrderItem(req: Request): Promise<Record<string, any>>
@@ -43,12 +43,12 @@ interface IServiceOrderItem {
 }
 
 export type IOrderItem = {
-  readonly order_id: number
-  readonly book_id: number
-  readonly order_status: string
-  readonly payment_type: string
-  readonly payment_status: string
-  readonly total_order: number
-  readonly created_at?: any
-  readonly updated_at?: any
+  order_id: number
+  book_id: number
+  order_status: string
+  payment_type: string
+  payment_status: string
+  total_order: number
+  created_at?: any
+  updated_at?: any
 }

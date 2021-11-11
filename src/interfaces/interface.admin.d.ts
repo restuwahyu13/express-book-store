@@ -1,3 +1,5 @@
+import { Request, Response } from '@/helpers/helper.generic'
+
 export interface IControllerAdmin {
   createdControllerAdmin(req: Request, res: Response): Promise<any>
   resultsControllerAdmin(req: Request, res: Response): Promise<any>
@@ -15,10 +17,10 @@ export interface IServiceAdmin {
 }
 
 export type IAdmin = {
-  readonly email: string
-  readonly password: string
-  readonly role: string
-  readonly access_token?: string
-  readonly created_at?: any
-  readonly updated_at?: any
+  email: string
+  password: string
+  role: string
+  access_token?: string
+  created_at?: any
+  updated_at?: any
 }

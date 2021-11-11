@@ -1,4 +1,4 @@
-import { Request, Response } from '../helpers/helper.generic'
+import { Request, Response } from '@/helpers/helper.generic'
 
 export interface IControllerUser {
   registerControllerUser(req: Request, res: Response): Promise<any>
@@ -19,14 +19,14 @@ export interface IServiceUser {
 }
 
 export type IUser = {
-  readonly email: string
-  readonly password: string
-  readonly role: string
-  readonly active?: boolean
-  readonly verified?: boolean
-  readonly access_token?: string
-  readonly expired_at?: any
-  readonly type?: string
-  readonly created_at?: any
-  readonly updated_at?: any
+  email: string
+  password: string
+  role: string
+  active?: boolean
+  verified?: boolean
+  access_token?: string
+  expired_at?: any
+  type?: string
+  created_at?: any
+  updated_at?: any
 }
