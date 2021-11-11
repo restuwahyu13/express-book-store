@@ -6,6 +6,7 @@ import { sendMailgun } from '@libs/lib.mailgun'
 import { renderTemplate } from '@libs/lib.ejs'
 import { signToken } from '@libs/lib.jwt'
 import { expiredAt } from '@/helpers/helper.expiredAt'
+import { comparePassword, IPassword } from '@/libs/lib.bcrypt'
 
 export class ServiceUser extends ModelUser implements IServiceUser {
   /**
@@ -84,6 +85,12 @@ export class ServiceUser extends ModelUser implements IServiceUser {
 
       if (!checkUserAccount) {
         throw { code: status.CONFLICT, message: `Email ${req.body.email} is not never registered` }
+      }
+
+      const checkPassword: IPassword = await comparePassword(req.body.password, checkUserAccount.password)
+
+      if (checkPassword.error) {
+        throw { code: status.BAD_REQUEST, message: 'Password is not match' }
       }
 
       const generateAccessToken: any = await signToken(
