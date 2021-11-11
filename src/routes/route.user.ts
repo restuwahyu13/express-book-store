@@ -16,6 +16,9 @@ export class RouteUser extends ControllerUser {
     this.router.post('/auth/forgot-password/:id', this.forgotControllerUser)
     this.router.post('/auth/resend-token/:id', this.resendControllerUser)
     this.router.put('/auth/reset-password/:id', this.forgotControllerUser)
+    this.router.put('/token/health/:id', this.healthTokenControllerUser)
+    this.router.put('/token/refresh/:id', this.refreshTokenControllerUser)
+    this.router.put('/token/revoke/:id', this.revokeTokenControllerUser)
 
     return this.router
   }

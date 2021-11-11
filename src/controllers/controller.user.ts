@@ -1,6 +1,5 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { checkSchema } from 'express-validator'
-
 import { IUser, IControllerUser } from '@/interfaces/interface.user'
 import { ServiceUser } from '@/services/service.user'
 import { Request, Response } from '@/helpers/helper.generic'
@@ -67,6 +66,42 @@ export class ControllerUser extends ServiceUser implements IControllerUser {
   }
 
   async resetControllerUser(req: Request<IUser>, res: Response): Promise<any> {
+    try {
+      const result: Record<string, any> = await super.resetServiceUser(req)
+      if (result.code >= status.BAD_REQUEST) {
+        throw { ...result }
+      }
+      res.status(result.code).json(result)
+    } catch (e: any) {
+      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+    }
+  }
+
+  async healthTokenControllerUser(req: Request<IUser>, res: Response): Promise<any> {
+    try {
+      const result: Record<string, any> = await super.resetServiceUser(req)
+      if (result.code >= status.BAD_REQUEST) {
+        throw { ...result }
+      }
+      res.status(result.code).json(result)
+    } catch (e: any) {
+      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+    }
+  }
+
+  async refreshTokenControllerUser(req: Request<IUser>, res: Response): Promise<any> {
+    try {
+      const result: Record<string, any> = await super.resetServiceUser(req)
+      if (result.code >= status.BAD_REQUEST) {
+        throw { ...result }
+      }
+      res.status(result.code).json(result)
+    } catch (e: any) {
+      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+    }
+  }
+
+  async revokeTokenControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resetServiceUser(req)
       if (result.code >= status.BAD_REQUEST) {
