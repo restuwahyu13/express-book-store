@@ -1,10 +1,9 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { Express } from 'express'
-
-import { ModelBookImage } from '@/models/model.book'
-import { IServiceBookImage, IBookImage } from '@/interfaces/interface.book'
-import { Request } from '@/helpers/helper.generic'
-import { cloudinaryStorage } from '@/libs/lib.cloudinary'
+import { ModelBookImage } from '@models/model.book'
+import { IServiceBookImage, IBookImage } from '@interfaces/interface.book'
+import { Request } from '@helpers/helper.generic'
+import { cloudinaryStorage } from '@libs/lib.cloudinary'
 
 export class ServiceBookImage extends ModelBookImage implements IServiceBookImage {
   /**

@@ -1,13 +1,14 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { assert } from 'is-any-type'
-import { ModelUser, ModelSecret } from '@/models/model.user'
-import { IServiceUser, IUser } from '@/interfaces/interface.user'
-import { Request } from '@/helpers/helper.generic'
-import { sendMailer } from '@/libs/lib.nodemailer'
+import { ModelUser, ModelSecret } from '@models/model.user'
+import { IServiceUser, IUser } from '@interfaces/interface.user'
+import { Request } from '@helpers/helper.generic'
+import { sendMailer } from '@libs/lib.nodemailer'
 import { renderTemplate } from '@libs/lib.ejs'
 import { signToken } from '@libs/lib.jwt'
-import { expiredAt } from '@/helpers/helper.expiredAt'
-import { comparePassword, IPassword } from '@/libs/lib.bcrypt'
+import { expiredAt } from '@helpers/helper.expiredAt'
+import { comparePassword, IPassword } from '@libs/lib.bcrypt'
+import { randomToken } from '@helpers/helper.randomToken'
 
 export class ServiceUser extends ModelUser implements IServiceUser {
   /**
@@ -35,18 +36,9 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.FORBIDDEN, message: 'Register new account failed' }
       }
 
-      const generateActivaitonToken: any = await signToken(
-        { id: addUserAccount.id, email: addUserAccount.email, role: addUserAccount.role },
-        { expiredAt: 5, type: 'minute' }
-      )
-
-      if (generateActivaitonToken instanceof Promise) {
-        throw { code: status.BAD_REQUEST, message: 'Generate activation token failed' }
-      }
-
       const htmlTemplate: any = await renderTemplate(
         addUserAccount.email,
-        generateActivaitonToken.accessToken,
+        randomToken(),
         'template_register'
       )
 
@@ -63,7 +55,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
       const addActivationToken: ModelSecret = await ModelSecret.query()
         .insert({
           user_id: addUserAccount.id,
-          access_token: generateActivaitonToken.accessToken,
+          access_token: randomToken(),
           type: 'activation',
           expired_at: expiredAt(5, 'minute')
         })

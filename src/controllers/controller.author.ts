@@ -1,9 +1,8 @@
 import { StatusCodes as status } from 'http-status-codes'
 import { checkSchema } from 'express-validator'
-
-import { IAuthor, IControllerAuthor } from '@/interfaces/interface.author'
-import { ServiceAuthor } from '@/services/service.author'
-import { Request, Response } from '@/helpers/helper.generic'
+import { IAuthor, IControllerAuthor } from '@interfaces/interface.author'
+import { ServiceAuthor } from '@services/service.author'
+import { Request, Response } from '@helpers/helper.generic'
 
 export class ControllerAuthor extends ServiceAuthor implements IControllerAuthor {
   /**

@@ -1,8 +1,7 @@
 import { StatusCodes as status } from 'http-status-codes'
-
-import { ModelOrder } from '@/models/model.order'
-import { IOrder, IServiceOrder } from '@/interfaces/interface.order'
-import { Request } from '@/helpers/helper.generic'
+import { ModelOrder } from '@models/model.order'
+import { IOrder, IServiceOrder } from '@interfaces/interface.order'
+import { Request } from '@helpers/helper.generic'
 
 export class ServiceOrder extends ModelOrder implements IServiceOrder {
   public async createServiceOrder(req: Request<IOrder>): Promise<Record<string, any>> {

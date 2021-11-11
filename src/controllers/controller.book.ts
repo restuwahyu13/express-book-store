@@ -1,8 +1,7 @@
 import { StatusCodes as status } from 'http-status-codes'
-
-import { IBook, IControllerBook } from '@/interfaces/interface.book'
-import { ServiceBook } from '@/services/service.book'
-import { Request, Response } from '@/helpers/helper.generic'
+import { IBook, IControllerBook } from '@interfaces/interface.book'
+import { ServiceBook } from '@services/service.book'
+import { Request, Response } from '@helpers/helper.generic'
 import { checkSchema } from 'express-validator'
 
 export class ControllerBook extends ServiceBook implements IControllerBook {
