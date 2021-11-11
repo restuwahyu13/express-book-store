@@ -51,7 +51,7 @@ export class ModelSecret extends Model implements DTOSecret {
   updated_at?: any
 
   static get tableName(): string {
-    return 'secret_key'
+    return 'secret'
   }
 
   static get relationMappings(): RelationMappings | RelationMappingsThunk {
