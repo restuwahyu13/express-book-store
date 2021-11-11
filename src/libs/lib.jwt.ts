@@ -18,14 +18,14 @@ interface IToken {
   accessToken: string
   refreshToken: string
   accessTokenExpired: string
-  refreshTokenExpred: string
+  refreshTokenExpired: string
 }
 
 interface ITokenMixed {
   accessToken: string
   refreshToken: string
   accessTokenExpired: string
-  refreshTokenExpred: string
+  refreshTokenExpired: string
   status: string
 }
 
@@ -71,7 +71,7 @@ export const signToken = async (data: Record<string, any>, options: Ioptions): P
       accessToken: await encrypt(accessToken, 26),
       refreshToken: await encrypt(refreshToken, 26),
       accessTokenExpired: `${convertTime(options.expiredAt as number, 'days')} Days`,
-      refreshTokenExpred: `${convertTime(30, 'days')} Days`
+      refreshTokenExpired: `${convertTime(30, 'days')} Days`
     }
 
     return token
@@ -138,7 +138,7 @@ export const refreshToken = async (refreshToken: string, options: Ioptions): Pro
         accessToken: await encrypt(newAccessToken, 26),
         refreshToken: await encrypt(newRefreshToken, 26),
         accessTokenExpired: `${convertTime(options.expiredAt as number, 'days')} Days`,
-        refreshTokenExpred: `${convertTime(30, 'days')} Days`
+        refreshTokenExpired: `${convertTime(30, 'days')} Days`
       }
     } else {
       token = {
@@ -146,7 +146,7 @@ export const refreshToken = async (refreshToken: string, options: Ioptions): Pro
         accessToken: await encrypt(decryptAccessToken, 26),
         refreshToken: await encrypt(decryptRefreshToken, 26),
         accessTokenExpired: `${convertTime(options.expiredAt as number, 'days')} Days`,
-        refreshTokenExpred: `${convertTime(30, 'days')} Days`
+        refreshTokenExpired: `${convertTime(30, 'days')} Days`
       }
     }
 

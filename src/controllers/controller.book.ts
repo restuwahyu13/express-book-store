@@ -107,7 +107,7 @@ export class Schema {
         errorMessage: 'name must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'name not including unique character'
       }
     },
@@ -145,7 +145,7 @@ export class Schema {
         errorMessage: 'publisher must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'publisher not including unique character'
       }
     },
@@ -165,7 +165,7 @@ export class Schema {
         errorMessage: 'description must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'publisher not including unique character'
       }
     },
@@ -178,7 +178,7 @@ export class Schema {
         errorMessage: 'language must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'language not including unique character'
       }
     },
@@ -245,7 +245,7 @@ export class Schema {
         errorMessage: 'name must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'name not including number or unique character'
       }
     },
@@ -283,7 +283,7 @@ export class Schema {
         errorMessage: 'publisher must be date'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'name not including publisher or unique character'
       }
     },
@@ -303,7 +303,7 @@ export class Schema {
         errorMessage: 'description must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'publisher not including number or unique character'
       }
     },
@@ -316,7 +316,7 @@ export class Schema {
         errorMessage: 'language must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'language not including number or unique character'
       }
     },

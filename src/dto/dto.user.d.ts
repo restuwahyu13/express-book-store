@@ -3,9 +3,8 @@ export interface DTOUser {
   email: string
   password: string
   role: string
-  active?: boolean
-  verified?: boolean
-  access_token?: string
+  active: boolean
+  verified: boolean
   created_at?: any
   updated_at?: any
 }

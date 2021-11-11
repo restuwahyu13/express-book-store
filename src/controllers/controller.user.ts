@@ -148,7 +148,7 @@ export class Schema {
         errorMessage: 'role must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'role not including unique character'
       }
     }

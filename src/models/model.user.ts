@@ -7,9 +7,8 @@ export class ModelUser extends Model implements DTOUser {
   email!: string
   password!: string
   role!: string
-  active?: boolean
-  verified?: boolean
-  access_token?: string
+  active!: boolean
+  verified!: boolean
   created_at?: any
   updated_at?: any
 
@@ -25,17 +24,17 @@ export class ModelUser extends Model implements DTOUser {
     if (this.role === 'admin') {
       this.verified = true
       this.active = true
+    } else {
+      this.active = true
+      this.verified = false
     }
-    const password = await hashPassword(this.password)
+
+    const password: string = await hashPassword(this.password)
     this.password = password
     this.created_at = new Date()
   }
 
   async $beforeUpdate(): Promise<void> {
-    if (this.role === 'admin') {
-      this.verified = true
-      this.active = true
-    }
     const password = await hashPassword(this.password)
     this.password = password
     this.updated_at = new Date()

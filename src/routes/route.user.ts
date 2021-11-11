@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { ControllerUser } from '@/controllers/controller.user'
+import { ControllerUser, Schema } from '@/controllers/controller.user'
+import { validator } from '@/libs/lib.validator'
 
 export class RouteUser extends ControllerUser {
   private router: Router
@@ -10,7 +11,7 @@ export class RouteUser extends ControllerUser {
   }
 
   public main(): Router {
-    this.router.post('/auth/register', this.registerControllerUser)
+    this.router.post('/auth/register', [...Schema.registerSchemaUser, validator()], this.registerControllerUser)
     this.router.post('/auth/login', this.loginControllerUser)
     this.router.get('/auth/activation-account/:id', this.activationControllerUser)
     this.router.post('/auth/forgot-password/:id', this.forgotControllerUser)

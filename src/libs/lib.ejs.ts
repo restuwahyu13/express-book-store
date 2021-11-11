@@ -9,15 +9,12 @@ export const renderTemplate = async (to: string, token: string, templateName: st
     const dirname: string = path.resolve(__dirname, `../templates/${templateName}.ejs`)
 
     if (fs.existsSync(dirname)) {
-      const html: string = ejs.renderFile(dirname, (err: any, str: string): any => {
-        if (!err) return str
-      })
-      const res: string = await ejs.render(html, { to, token, url }, { async: true, beautify: true })
-      return res
+      const htmlTemplate: string = await ejs.renderFile(dirname, { to, token, url }, { async: true, beautify: true })
+      return htmlTemplate
     } else {
       return false
     }
   } catch (err: any) {
-    return Promise.reject(new BookStoreError('Render template from ejs failed'))
+    return Promise.reject(new BookStoreError('Render html template from ejs failed'))
   }
 }

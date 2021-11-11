@@ -107,7 +107,7 @@ export class Schema {
         errorMessage: 'first_name must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'first_name not including number or unique character'
       }
     },
@@ -120,7 +120,7 @@ export class Schema {
         errorMessage: 'last_name must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'last_name not including number or unique character'
       }
     },
@@ -133,7 +133,7 @@ export class Schema {
         errorMessage: 'place_of_birth must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'place_of_birth not including number or unique character'
       }
     },
@@ -191,7 +191,7 @@ export class Schema {
         errorMessage: 'first_name must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'first_name not including number or unique character'
       }
     },
@@ -204,7 +204,7 @@ export class Schema {
         errorMessage: 'last_name must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'last_name not including number or unique character'
       }
     },
@@ -217,7 +217,7 @@ export class Schema {
         errorMessage: 'place_of_birth must be string'
       },
       custom: {
-        options: (value) => /^[A-z-Z-a]/gi.test(value),
+        options: (value) => /[^A-Z]/gi.test(value) === false,
         errorMessage: 'place_of_birth not including number or unique character'
       }
     },

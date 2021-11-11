@@ -1,8 +1,9 @@
 import { StatusCodes as status } from 'http-status-codes'
+import { assert } from 'is-any-type'
 import { ModelUser, ModelSecret } from '@/models/model.user'
 import { IServiceUser, IUser } from '@/interfaces/interface.user'
 import { Request } from '@/helpers/helper.generic'
-import { sendMailgun } from '@libs/lib.mailgun'
+import { sendMailer } from '@/libs/lib.nodemailer'
 import { renderTemplate } from '@libs/lib.ejs'
 import { signToken } from '@libs/lib.jwt'
 import { expiredAt } from '@/helpers/helper.expiredAt'
@@ -28,14 +29,14 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.CONFLICT, message: `Email ${req.body.email} already taken` }
       }
 
-      const addUserAccount: ModelUser = await super.model().query().insert(req.body).first()
+      const addUserAccount: ModelUser = await super.model().query().insert(req.body)
 
       if (!addUserAccount) {
         throw { code: status.FORBIDDEN, message: 'Register new account failed' }
       }
 
       const generateActivaitonToken: any = await signToken(
-        { id: addUserAccount.id, email: req.body.email },
+        { id: addUserAccount.id, email: addUserAccount.email, role: addUserAccount.role },
         { expiredAt: 5, type: 'minute' }
       )
 
@@ -43,16 +44,20 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.BAD_REQUEST, message: 'Generate activation token failed' }
       }
 
-      const htmlTemplate: any = await renderTemplate(req.body.email, generateActivaitonToken.accessToken, 'template_register')
+      const htmlTemplate: any = await renderTemplate(
+        addUserAccount.email,
+        generateActivaitonToken.accessToken,
+        'template_register'
+      )
 
       if (htmlTemplate instanceof Boolean || htmlTemplate instanceof Promise) {
         throw { code: status.BAD_REQUEST, message: 'Render html template from ejs failed' }
       }
 
-      const sendMail: any = await sendMailgun(req.body.email, 'Activation Account', htmlTemplate)
+      const sendMail: any = await sendMailer(addUserAccount.email, 'Activation Account', htmlTemplate)
 
-      if (!sendMail || sendMail instanceof Promise) {
-        throw { code: status.BAD_REQUEST, message: 'Render html template from ejs failed' }
+      if (assert.isUndefined(sendMail) || assert.isPromise(sendMail)) {
+        throw { code: status.BAD_REQUEST, message: 'Sending email activation failed' }
       }
 
       const addActivationToken: ModelSecret = await ModelSecret.query()
@@ -70,7 +75,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
 
       return Promise.resolve({ code: status.CREATED, message: 'Register new account success' })
     } catch (e: any) {
-      return Promise.reject({ code: e.code, message: e.message })
+      return Promise.reject({ code: e.code || status.BAD_REQUEST, message: e.message })
     }
   }
 
@@ -94,7 +99,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
       }
 
       const generateAccessToken: any = await signToken(
-        { id: checkUserAccount.id, email: req.body.email },
+        { id: checkUserAccount.id, email: checkUserAccount.email, role: checkUserAccount.role },
         { expiredAt: 1, type: 'days' }
       )
 

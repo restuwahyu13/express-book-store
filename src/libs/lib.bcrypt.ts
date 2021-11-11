@@ -6,7 +6,8 @@ export interface IPassword {
 }
 
 export const hashPassword = async (password: string): Promise<string> => {
-  return bcryptjs.hash(password, bcryptjs.genSaltSync(20))
+  const res: string = await bcryptjs.hash(password, bcryptjs.genSaltSync(10))
+  return res
 }
 
 export const comparePassword = (password: string, hashPassword: string): Promise<IPassword> => {

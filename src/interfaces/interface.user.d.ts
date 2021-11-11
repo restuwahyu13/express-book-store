@@ -28,11 +28,8 @@ export type IUser = {
   email: string
   password: string
   role: string
-  active?: boolean
-  verified?: boolean
-  access_token?: string
-  expired_at?: any
-  type?: string
+  active: boolean
+  verified: boolean
   created_at?: any
   updated_at?: any
 }
