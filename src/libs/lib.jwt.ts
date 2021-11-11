@@ -8,6 +8,11 @@ import { convertTime } from '@/helpers/helper.convertTime'
 
 const nds: InstanceType<typeof NodeDiskStorage> = new NodeDiskStorage({ compress: true })
 const secretKey: string = process.env.JWT_SECRET_KEY || ''
+const typeTime: Record<string, any> = {
+  days: 'd',
+  minute: 'm',
+  second: 's'
+}
 
 interface IToken {
   accessToken: string
@@ -49,7 +54,7 @@ const healthToken = async (accessToken: string): Promise<boolean> => {
 export const signToken = async (data: Record<string, any>, options: Ioptions): Promise<Record<string, any> | string> => {
   try {
     const accessToken: string = jwt.sign({ ...data }, secretKey, {
-      expiresIn: `${options.expiredAt}${options.type}`,
+      expiresIn: `${options.expiredAt}${typeTime[options.type]}`,
       audience: 'book-store-api'
     })
 
@@ -112,7 +117,7 @@ export const refreshToken = async (refreshToken: string, options: Ioptions): Pro
       const getRefreshTokenData: jwt.JwtPayload = jwt.decode(decryptRefreshToken) as any
 
       const newAccessToken: string = jwt.sign({ ...getAccessTokenData }, secretKey, {
-        expiresIn: `${options.expiredAt}${options.type}`,
+        expiresIn: `${options.expiredAt}${typeTime[options.type]}`,
         audience: 'book-store-api'
       })
 
