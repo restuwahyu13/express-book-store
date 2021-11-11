@@ -1,5 +1,5 @@
-import { BookStoreError } from '@/helpers/helper.error'
 import { NodeMailgun } from 'ts-mailgun'
+import { BookStoreError } from '@/helpers/helper.error'
 
 export const sendMail = async (to: string, suject: string, template: string): Promise<any> => {
   try {

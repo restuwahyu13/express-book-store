@@ -1,9 +1,8 @@
+import fs from 'fs'
 import multer, { FileFilterCallback } from 'multer'
 import { Request, Express } from 'express'
-import fs from 'fs'
-
-import { extensionSupport } from '../helpers/helper.extension'
-import { BookStoreError } from '../helpers/helper.error'
+import { extensionSupport } from '@helpers/helper.extension'
+import { BookStoreError } from '@helpers/helper.error'
 
 export const upload = multer({
   storage: multer.diskStorage({

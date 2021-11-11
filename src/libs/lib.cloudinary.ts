@@ -1,5 +1,5 @@
 import cloudinary, { UploadApiResponse } from 'cloudinary'
-import { BookStoreError } from '../helpers/helper.error'
+import { BookStoreError } from '@/helpers/helper.error'
 
 export const cloudinaryStorage = async (filename: string): Promise<UploadApiResponse> => {
   try {
