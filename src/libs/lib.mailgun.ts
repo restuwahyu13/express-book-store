@@ -1,7 +1,7 @@
 import { NodeMailgun } from 'ts-mailgun'
 import { BookStoreError } from '@/helpers/helper.error'
 
-export const sendMail = async (to: string, suject: string, template: string): Promise<any> => {
+export const sendMailgun = async (to: string, suject: string, template: string): Promise<any> => {
   try {
     const mailgun = new NodeMailgun(process.env.MAILGUN_KEY as string) as NodeMailgun
     const res = (await mailgun.send(to, suject, template)) as Promise<any>

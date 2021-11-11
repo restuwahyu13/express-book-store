@@ -7,6 +7,9 @@ export interface IControllerUser {
   forgotControllerUser(req: Request, res: Response): Promise<any>
   resendControllerUser(req: Request, res: Response): Promise<any>
   resetControllerUser(req: Request, res: Response): Promise<any>
+  healthTokenControllerUser(req: Request, res: Response): Promise<any>
+  refreshTokenControllerUser(req: Request, res: Response): Promise<any>
+  revokeTokenControllerUser(req: Request, res: Response): Promise<any>
 }
 
 export interface IServiceUser {
@@ -16,6 +19,9 @@ export interface IServiceUser {
   forgotServiceUser(req: Request): Promise<Record<string, any>>
   resendServiceUser(req: Request): Promise<Record<string, any>>
   resetServiceUser(req: Request): Promise<Record<string, any>>
+  healthTokenServiceUser(req: Request, res: Response): Promise<any>
+  refreshTokenServiceUser(req: Request, res: Response): Promise<any>
+  revokeTokenServiceUser(req: Request, res: Response): Promise<any>
 }
 
 export type IUser = {
