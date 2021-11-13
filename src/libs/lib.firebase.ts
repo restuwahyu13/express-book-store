@@ -1,6 +1,6 @@
 import * as firebase from 'firebase-admin'
-import * as config from '@/configs/firebase.json'
-import { BookStoreError } from '@/helpers/helper.error'
+import * as config from '@configs/firebase.json'
+import { BookStoreError } from '@helpers/helper.error'
 
 export async function sendNotification(title: string, body: string, data: Record<string, any>, tokens: string[]): Promise<any> {
   try {

@@ -3,8 +3,8 @@ import { StatusCodes as Status } from 'http-status-codes'
 import { decrypt, encrypt } from 'jwt-transform'
 import { NodeDiskStorage } from 'node-disk-storage'
 import jwt from 'jsonwebtoken'
-import { BookStoreError } from '@/helpers/helper.error'
-import { convertTime } from '@/helpers/helper.convertTime'
+import { BookStoreError } from '@helpers/helper.error'
+import { convertTime } from '@helpers/helper.convertTime'
 
 const nds: InstanceType<typeof NodeDiskStorage> = new NodeDiskStorage({ compress: true })
 const secretKey: string = process.env.JWT_SECRET_KEY || ''
@@ -41,7 +41,7 @@ const healthToken = async (accessToken: string): Promise<boolean> => {
     throw { code: Status.BAD_REQUEST, message: 'Get accessTokenfrom disk failed' }
   }
 
-  const decryptAccessToken: string = await decrypt(getAccessToken, 26)
+  const decryptAccessToken: string = await decrypt(getAccessToken, 20)
   const decodedAccesToken: string | jwt.JwtPayload = jwt.verify(decryptAccessToken, secretKey, { audience: 'book-store-api' })
 
   if (!decodedAccesToken || decodedAccesToken instanceof jwt.JsonWebTokenError) {
@@ -60,16 +60,19 @@ export const signToken = async (data: Record<string, any>, options: Ioptions): P
 
     const refreshToken: string = jwt.sign({ ...data }, secretKey, { expiresIn: '30d', audience: 'book-store-api' })
 
-    const setAccessToken: boolean | undefined = nds.set('accessToken', accessToken)
-    const setRefreshToken: boolean | undefined = nds.set('refreshToken', refreshToken)
+     const encryptedAccessToken: string = await encrypt(accessToken, 20)
+     const encryptedRefreshToken: string = await encrypt(refreshToken, 20)
+
+    const setAccessToken: boolean | undefined = nds.set('accessToken', encryptedAccessToken)
+    const setRefreshToken: boolean | undefined = nds.set('refreshToken', encryptedRefreshToken)
 
     if (!setAccessToken || !setRefreshToken) {
       throw { code: Status.BAD_REQUEST, message: 'Store accessToken and refreshToken into disk failed' }
     }
 
     const token: IToken = {
-      accessToken: await encrypt(accessToken, 26),
-      refreshToken: await encrypt(refreshToken, 26),
+      accessToken: await encrypt(accessToken, 20),
+      refreshToken: await encrypt(refreshToken, 20),
       accessTokenExpired: `${convertTime(options.expiredAt as number, 'days')} Days`,
       refreshTokenExpired: `${convertTime(30, 'days')} Days`
     }
@@ -80,7 +83,7 @@ export const signToken = async (data: Record<string, any>, options: Ioptions): P
   }
 }
 
-export const verifyToken = async (req: Request, accessToken: string): Promise<Record<string, any> | string> => {
+export const verifyToken = async (accessToken: string): Promise<Record<string, any> | string> => {
   try {
     const getAccessToken: string | undefined = nds.get('accessToken') || accessToken
 
@@ -88,10 +91,8 @@ export const verifyToken = async (req: Request, accessToken: string): Promise<Re
       throw { code: Status.BAD_REQUEST, message: 'Get accessToken from disk failed' }
     }
 
-    const decryptAccessToken: string = await decrypt(getAccessToken, 26)
+    const decryptAccessToken: string = await decrypt(getAccessToken, 20)
     const decodedToken: string | jwt.JwtPayload = jwt.verify(decryptAccessToken, secretKey, { audience: 'book-store-api' })
-    // global request data for user or admin
-    req['payload'] = decodedToken
 
     return decodedToken
   } catch (e: any) {
@@ -105,8 +106,8 @@ export const refreshToken = async (refreshToken: string, options: Ioptions): Pro
     const getAccessToken: any = await nds.get('accessToken')
     const getRefreshToken: any = (await nds.get('refreshToken')) || refreshToken
 
-    const decryptAccessToken: string = await decrypt(getRefreshToken, 26)
-    const decryptRefreshToken: string = await decrypt(getAccessToken, 26)
+    const decryptAccessToken: string = await decrypt(getRefreshToken, 20)
+    const decryptRefreshToken: string = await decrypt(getAccessToken, 20)
 
     if (!healthToken(getAccessToken)) {
       if (!getAccessToken || !getRefreshToken) {
@@ -135,16 +136,16 @@ export const refreshToken = async (refreshToken: string, options: Ioptions): Pro
 
       token = {
         status: 'AccessToken Not Health, and this is new accessToken and refreshToken',
-        accessToken: await encrypt(newAccessToken, 26),
-        refreshToken: await encrypt(newRefreshToken, 26),
+        accessToken: await encrypt(newAccessToken, 20),
+        refreshToken: await encrypt(newRefreshToken, 20),
         accessTokenExpired: `${convertTime(options.expiredAt as number, 'days')} Days`,
         refreshTokenExpired: `${convertTime(30, 'days')} Days`
       }
     } else {
       token = {
         status: 'AccessToken Is Health, and this is old accessToken and refreshToken',
-        accessToken: await encrypt(decryptAccessToken, 26),
-        refreshToken: await encrypt(decryptRefreshToken, 26),
+        accessToken: await encrypt(decryptAccessToken, 20),
+        refreshToken: await encrypt(decryptRefreshToken, 20),
         accessTokenExpired: `${convertTime(options.expiredAt as number, 'days')} Days`,
         refreshTokenExpired: `${convertTime(30, 'days')} Days`
       }

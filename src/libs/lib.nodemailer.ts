@@ -1,5 +1,5 @@
 import { createTransport, Transporter, SentMessageInfo } from 'nodemailer'
-import { BookStoreError } from '@/helpers/helper.error'
+import { BookStoreError } from '@helpers/helper.error'
 
 export const sendMailer = async (to: string, subject: string, template: string): Promise<boolean> => {
   try {
