@@ -20,3 +20,5 @@ export class RouteBook extends ControllerBook {
     return this.router
   }
 }
+
+export default new RouteBook().main()

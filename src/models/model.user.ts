@@ -1,6 +1,6 @@
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
-import { DTOUser, DTOSecret } from '@/dto/dto.user'
-import { hashPassword } from '@/libs/lib.bcrypt'
+import { DTOUser, DTOSecret } from '@dto/dto.user'
+import { hashPassword } from '@libs/lib.bcrypt'
 
 export class ModelUser extends Model implements DTOUser {
   id!: number

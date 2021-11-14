@@ -20,3 +20,5 @@ export class RouteAuthor extends ControllerAuthor {
     return this.router
   }
 }
+
+export default new RouteAuthor().main()

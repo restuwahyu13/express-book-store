@@ -1,7 +1,7 @@
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
-import { DTORating } from '@/dto/dto.rating'
-import { ModelBook } from '@/models/model.book'
-import { ModelUser } from '@/models/model.user'
+import { DTORating } from '@dto/dto.rating'
+import { ModelBook } from '@models/model.book'
+import { ModelUser } from '@models/model.user'
 
 export class ModelRating extends Model implements DTORating {
   id!: number

@@ -1,5 +1,5 @@
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
-import { DTOOrder, DTOOrderItem } from '@/dto/dto.order'
+import { DTOOrder, DTOOrderItem } from '@dto/dto.order'
 import { ModelBook } from '@models/model.book'
 import { ModelUser } from '@models/model.user'
 

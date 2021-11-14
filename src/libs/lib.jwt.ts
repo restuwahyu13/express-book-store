@@ -1,4 +1,3 @@
-import { Request } from 'express'
 import { StatusCodes as Status } from 'http-status-codes'
 import { decrypt, encrypt } from 'jwt-transform'
 import { NodeDiskStorage } from 'node-disk-storage'
@@ -14,14 +13,14 @@ const typeTime: Record<string, any> = {
   second: 's'
 }
 
-interface IToken {
+export interface IToken {
   accessToken: string
   refreshToken: string
   accessTokenExpired: string
   refreshTokenExpired: string
 }
 
-interface ITokenMixed {
+export interface ITokenMixed {
   accessToken: string
   refreshToken: string
   accessTokenExpired: string
@@ -51,7 +50,7 @@ const healthToken = async (accessToken: string): Promise<boolean> => {
   return true
 }
 
-export const signToken = async (data: Record<string, any>, options: Ioptions): Promise<Record<string, any> | string> => {
+export const signToken = async (data: Record<string, any>, options: Ioptions): Promise<IToken | string> => {
   try {
     const accessToken: string = jwt.sign({ ...data }, secretKey, {
       expiresIn: `${options.expiredAt}${typeTime[options.type]}`,
@@ -60,8 +59,8 @@ export const signToken = async (data: Record<string, any>, options: Ioptions): P
 
     const refreshToken: string = jwt.sign({ ...data }, secretKey, { expiresIn: '30d', audience: 'book-store-api' })
 
-     const encryptedAccessToken: string = await encrypt(accessToken, 20)
-     const encryptedRefreshToken: string = await encrypt(refreshToken, 20)
+    const encryptedAccessToken: string = await encrypt(accessToken, 20)
+    const encryptedRefreshToken: string = await encrypt(refreshToken, 20)
 
     const setAccessToken: boolean | undefined = nds.set('accessToken', encryptedAccessToken)
     const setRefreshToken: boolean | undefined = nds.set('refreshToken', encryptedRefreshToken)
@@ -83,7 +82,7 @@ export const signToken = async (data: Record<string, any>, options: Ioptions): P
   }
 }
 
-export const verifyToken = async (accessToken: string): Promise<Record<string, any> | string> => {
+export const verifyToken = async (accessToken: string): Promise<jwt.JwtPayload | string> => {
   try {
     const getAccessToken: string | undefined = nds.get('accessToken') || accessToken
 

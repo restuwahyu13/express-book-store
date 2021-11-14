@@ -19,3 +19,5 @@ export class RouteOrder extends ControllerOrder {
     return this.router
   }
 }
+
+export default new RouteOrder().main()

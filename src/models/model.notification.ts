@@ -1,5 +1,5 @@
 import { Model } from 'objection'
-import { DTONotification } from '@/dto/dto.notificaton'
+import { DTONotification } from '@dto/dto.notificaton'
 
 export class ModelNotification extends Model implements DTONotification {
   id!: number

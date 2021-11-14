@@ -1,6 +1,6 @@
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection'
-import { DTOProfile } from '@/dto/dto.profile'
-import { ModelUser } from '@/models/model.user'
+import { DTOProfile } from '@dto/dto.profile'
+import { ModelUser } from '@models/model.user'
 
 export class ModelProfile extends Model implements DTOProfile {
   id!: number

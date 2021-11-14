@@ -43,3 +43,5 @@ export class RouteBookImage extends ControllerBookImage {
     return this.router
   }
 }
+
+export default new RouteBookImage().main()

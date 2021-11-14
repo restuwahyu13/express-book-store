@@ -3,7 +3,7 @@ import express, { Express, Router } from 'express'
 import http, { Server } from 'http'
 import os from 'os'
 import throng from 'throng'
-import Knex from 'knex'
+import Knex, { Knex as KnexDB } from 'knex'
 import Objection from 'objection'
 import bodyParser from 'body-parser'
 import cors from 'cors'
@@ -15,15 +15,21 @@ import rateLimit from 'express-rate-limit'
 import SlowDown from 'express-slow-down'
 
 import * as knexfile from '@/knexfile'
-import { RouteAuthor } from '@routes/route.author'
-import { RouteBook } from '@routes/route.book'
-import { RouteOrder } from '@routes/route.order'
-import { RouteUser } from '@routes/route.user'
-import { RouteBookImage } from '@routes/route.bookImage'
+import RouteAuthor from '@routes/route.author'
+import RouteBook from '@routes/route.book'
+import RouteOrder from '@routes/route.order'
+import RouteUser from '@routes/route.user'
+import RouteBookImage from '@routes/route.bookImage'
+
+interface IApp {
+  app: Express
+  db: KnexDB
+}
 
 class App {
   private app: Express
   private server: Server
+  private knex: KnexDB
   private author: Router
   private book: Router
   private bookImage: Router
@@ -33,16 +39,17 @@ class App {
   constructor() {
     this.app = express()
     this.server = http.createServer(this.app)
-    this.author = new RouteAuthor().main()
-    this.book = new RouteBook().main()
-    this.bookImage = new RouteBookImage().main()
-    this.order = new RouteOrder().main()
-    this.user = new RouteUser().main()
+    this.knex = Knex(knexfile[process.env.NODE_ENV as string])
+    this.author = RouteAuthor
+    this.book = RouteBook
+    this.bookImage = RouteBookImage
+    this.order = RouteOrder
+    this.user = RouteUser
   }
 
-  private async connection(): Promise<void> {
-    const knex: any = Knex(knexfile[process.env.NODE_ENV as string])
-    Objection.Model.knex(knex)
+  private connection(): KnexDB {
+    Objection.Model.knex(this.knex)
+    return this.knex
   }
 
   private async middleware(): Promise<void> {
@@ -121,18 +128,40 @@ class App {
   }
 
   public async main(): Promise<void> {
-    await this.connection()
+    this.connection()
     await this.middleware()
     await this.config()
     await this.route()
     await this.run()
   }
+
+  public async mainTest(): Promise<IApp> {
+    await this.middleware()
+    await this.config()
+    await this.route()
+    return { app: this.app, db: this.connection() }
+  }
 }
 
 /**
- * @description intialize app and run app
+ * @description intialize app and run app development / production
  */
-
 ;(async function () {
   await new App().main()
 })()
+
+/**
+ * @description intialize app and db for testing
+ */
+
+let app: Express
+let db: KnexDB
+;(async function () {
+  if (process.env.NODE_ENV === 'test') {
+    const res = await new App().mainTest()
+    app = res.app
+    db = res.db
+  }
+})()
+
+export { app, db }
