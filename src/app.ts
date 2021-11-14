@@ -101,7 +101,7 @@ class App {
     this.app.use('/api/v1/book', this.book)
     this.app.use('/api/v1/book/upload', this.bookImage)
     this.app.use('/api/v1/order', this.order)
-    this.app.use('/api/v1/user', this.user)
+    this.app.use('/api/v1/auth', this.user)
   }
 
   private async run(): Promise<void> {

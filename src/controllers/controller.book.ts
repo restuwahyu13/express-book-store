@@ -18,7 +18,7 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
@@ -35,7 +35,7 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
@@ -52,7 +52,7 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
@@ -69,7 +69,7 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
@@ -86,7 +86,7 @@ export class ControllerBook extends ServiceBook implements IControllerBook {
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 }

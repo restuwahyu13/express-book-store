@@ -86,6 +86,10 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.NOT_FOUND, message: `Email ${req.body.email} is not never registered` }
       }
 
+      if (!checkUserAccount.verified) {
+        throw { code: status.NOT_FOUND, message: `Account ${req.body.email} is not verified, please check your email` }
+      }
+
       const checkPassword: IPassword = await comparePassword(req.body.password, checkUserAccount.password)
 
       if (checkPassword.error) {
@@ -125,7 +129,9 @@ export class ServiceUser extends ModelUser implements IServiceUser {
 
   public async activationServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
-      const getActivationToken: ModelSecret = await ModelSecret.query().findOne({ token: req.params.token })
+      const getActivationToken: ModelSecret = await ModelSecret.query()
+        .findOne({ access_token: req.params.token })
+        .andWhere('type', 'activation')
 
       if (!getActivationToken) {
         throw { code: status.NOT_FOUND, message: 'Activation token not found' }
@@ -222,7 +228,8 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.NOT_FOUND, message: `Email ${req.body.email} is not exist` }
       }
 
-      const htmlTemplate: any = await renderTemplate(checkEmailExist.email, randomToken(), 'template_resend')
+      const resetToken: string = randomToken()
+      const htmlTemplate: any = await renderTemplate(checkEmailExist.email, resetToken, 'template_resend')
 
       if (assert.isBoolean(htmlTemplate) || assert.isPromise(htmlTemplate)) {
         throw { code: status.BAD_REQUEST, message: 'Render html template from ejs failed' }
@@ -237,7 +244,7 @@ export class ServiceUser extends ModelUser implements IServiceUser {
       const addActivationToken: ModelSecret = await ModelSecret.query()
         .insert({
           user_id: checkEmailExist.id,
-          access_token: randomToken(),
+          access_token: resetToken,
           type: 'activation',
           expired_at: expiredAt(5, 'minute')
         })

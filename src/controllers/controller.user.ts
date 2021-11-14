@@ -8,108 +8,108 @@ export class ControllerUser extends ServiceUser implements IControllerUser {
   async registerControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result = await super.registerServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async loginControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.loginServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async activationControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.activationServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async forgotControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.forgotServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async resendControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resendServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async resetControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resetServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async healthTokenControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resetServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async refreshTokenControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resetServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 
   async revokeTokenControllerUser(req: Request<IUser>, res: Response): Promise<any> {
     try {
       const result: Record<string, any> = await super.resetServiceUser(req)
-      if (result.code >= status.BAD_REQUEST) {
+      if (result.code >= status.INTERNAL_SERVER_ERROR) {
         throw { ...result }
       }
       res.status(result.code).json(result)
     } catch (e: any) {
-      res.status(e.code || status.BAD_REQUEST).json({ ...e })
+      res.status(e.code || status.INTERNAL_SERVER_ERROR).json({ ...e })
     }
   }
 }
