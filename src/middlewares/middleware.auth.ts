@@ -4,6 +4,8 @@ import { StatusCodes as Status } from 'http-status-codes'
 import { Request, Response, NextFunction, Handler } from 'express'
 import { JwtPayload } from 'jsonwebtoken'
 import { verifyToken } from '@libs/lib.jwt'
+import { ModelSecret } from '@models/model.user'
+import { dateFormat } from '@helpers/helper.dateFormat'
 
 export const auth = (): Handler => {
   return async function (req: Request, res: Response, next: NextFunction) {
@@ -24,6 +26,28 @@ export const auth = (): Handler => {
 
       if (assert.isUndefined(accessToken as any)) {
         throw { code: Status.UNAUTHORIZED, message: 'Access Token is required' }
+      }
+
+      const validJwt: string[] = (accessToken as string).split('.')
+
+      if (validJwt?.length !== 3) {
+        throw { code: Status.UNAUTHORIZED, message: 'JWT token is not valid' }
+      }
+
+      const checkAccessToken: ModelSecret = await ModelSecret.query()
+        .where('acess_token', validJwt[0])
+        .andWhere('type', 'login')
+        .first()
+
+      if (!checkAccessToken) {
+        throw { code: Status.UNAUTHORIZED, message: 'Access Token invalid' }
+      }
+
+      const datenow: string = dateFormat(new Date())
+      const expiredAt: string = dateFormat(checkAccessToken.expired_at)
+
+      if (expiredAt < datenow) {
+        throw { code: Status.UNAUTHORIZED, message: 'Access Token expired' }
       }
 
       const decodedToken: Record<string, any> | string | JwtPayload = await verifyToken(accessToken as any)
