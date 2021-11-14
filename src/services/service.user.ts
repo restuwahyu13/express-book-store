@@ -1,4 +1,5 @@
 import { StatusCodes as status } from 'http-status-codes'
+import moment from 'moment'
 import { assert } from 'is-any-type'
 import { ModelUser, ModelSecret } from '@models/model.user'
 import { IServiceUser, IUser } from '@interfaces/interface.user'
@@ -105,15 +106,23 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.BAD_REQUEST, message: 'Generate activation token failed' }
       }
 
-      const addAccessToken: ModelSecret = await ModelSecret.query().insert({
-        user_id: checkUserAccount.id,
-        access_token: generateAccessToken,
-        type: 'login',
-        expired_at: expiredAt(1, 'days')
-      })
+      const checkAccessTokeExist: ModelSecret = await ModelSecret.query()
+        .where({ user_id: checkUserAccount.id })
+        .andWhere('access_token', (generateAccessToken['accessToken'] as string).split('.')[0])
+        .andWhere('type', 'login')
+        .first()
 
-      if (!addAccessToken) {
-        throw { code: status.FORBIDDEN, message: 'Insert access token into database failed' }
+      if (!checkAccessTokeExist) {
+        const addAccessToken: ModelSecret = await ModelSecret.query().insert({
+          user_id: checkUserAccount.id,
+          access_token: (generateAccessToken['accessToken'] as string).split('.')[0],
+          type: 'login',
+          expired_at: expiredAt(1, 'days')
+        })
+
+        if (!addAccessToken) {
+          throw { code: status.FORBIDDEN, message: 'Insert access token into database failed' }
+        }
       }
 
       return Promise.resolve({ code: status.CREATED, message: 'Login successfully', token: generateAccessToken })
@@ -130,28 +139,39 @@ export class ServiceUser extends ModelUser implements IServiceUser {
   public async activationServiceUser(req: Request<IUser>): Promise<Record<string, any>> {
     try {
       const getActivationToken: ModelSecret = await ModelSecret.query()
-        .findOne({ access_token: req.params.token })
+        .where({ access_token: req.params.token })
         .andWhere('type', 'activation')
+        .first()
 
       if (!getActivationToken) {
         throw { code: status.NOT_FOUND, message: 'Activation token not found' }
       }
 
-      let datenow: string = new Date().toISOString()
-      let expiredAt: string = new Date(getActivationToken.expired_at).toISOString()
+      let datenow: string = moment(new Date()).format()
+      let expiredAt: string = moment(getActivationToken.expired_at).format()
 
       if (expiredAt < datenow) {
         throw { code: status.BAD_REQUEST, message: 'Activation token expired, please resend new activation token' }
       }
 
-      const updatedVerified: ModelUser = await super.model().query().updateAndFetchById(getActivationToken.id, { verified: true })
+      const checkVerifiedAccount: ModelUser = await super.model().query().findById(getActivationToken.user_id)
+
+      if (checkVerifiedAccount.verified) {
+        throw { code: status.BAD_REQUEST, message: 'Account already verified, please login' }
+      }
+
+      const updatedVerified: ModelUser = await super
+        .model()
+        .query()
+        .updateAndFetchById(getActivationToken.user_id, { verified: true })
 
       if (!updatedVerified) {
         throw { code: status.BAD_REQUEST, message: 'Verified account failed' }
       }
 
-      return Promise.resolve({ code: status.CREATED, message: `Verified account ${updatedVerified.email} success, please login` })
+      return Promise.resolve({ code: status.OK, message: `Verified account ${updatedVerified.email} success, please login` })
     } catch (e: any) {
+      console.log(e)
       return Promise.reject({ code: e.code, message: e.message })
     }
   }

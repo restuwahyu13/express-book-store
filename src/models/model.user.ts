@@ -35,8 +35,10 @@ export class ModelUser extends Model implements DTOUser {
   }
 
   async $beforeUpdate(): Promise<void> {
-    const password = await hashPassword(this.password)
-    this.password = password
+    if (this.password) {
+      const password = await hashPassword(this.password)
+      this.password = password
+    }
     this.updated_at = new Date()
   }
 }
