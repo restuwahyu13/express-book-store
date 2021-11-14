@@ -1,5 +1,4 @@
 import { StatusCodes as status } from 'http-status-codes'
-import moment from 'moment'
 import { assert } from 'is-any-type'
 import { ModelUser, ModelSecret } from '@models/model.user'
 import { IServiceUser, IUser } from '@interfaces/interface.user'
@@ -10,6 +9,7 @@ import { IToken, signToken } from '@libs/lib.jwt'
 import { expiredAt } from '@helpers/helper.expiredAt'
 import { comparePassword, IPassword } from '@libs/lib.bcrypt'
 import { randomToken } from '@helpers/helper.randomToken'
+import { dateFormat } from '@/helpers/helper.dateFormat'
 
 export class ServiceUser extends ModelUser implements IServiceUser {
   /**
@@ -147,8 +147,8 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.NOT_FOUND, message: 'Activation token not found' }
       }
 
-      let datenow: string = moment(new Date()).format()
-      let expiredAt: string = moment(getActivationToken.expired_at).format()
+      let datenow: string = dateFormat(new Date())
+      let expiredAt: string = dateFormat(getActivationToken.expired_at)
 
       if (expiredAt < datenow) {
         throw { code: status.BAD_REQUEST, message: 'Activation token expired, please resend new activation token' }
@@ -302,8 +302,8 @@ export class ServiceUser extends ModelUser implements IServiceUser {
         throw { code: status.NOT_FOUND, message: 'Reset token not found' }
       }
 
-      let datenow: string = new Date().toISOString()
-      let expiredAt: string = new Date(getActivationToken.expired_at).toISOString()
+      let datenow: string = dateFormat(new Date())
+      let expiredAt: string = dateFormat(getActivationToken.expired_at)
 
       if (expiredAt < datenow) {
         throw { code: status.BAD_REQUEST, message: 'Reset token expired, please reset password again' }
